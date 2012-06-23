@@ -6,6 +6,5 @@ log.txt*
 *.swo
 *.class
 .gwt
-war
 gwt-unitCache/
 www-test/
