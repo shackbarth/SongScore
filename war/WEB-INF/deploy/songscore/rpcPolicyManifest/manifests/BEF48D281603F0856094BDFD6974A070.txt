@@ -1,0 +1,2 @@
+serviceClass: com.songscoreapp.client.SongService
+path: 7BFF80153A8004AD9D62241C4250E57E.gwt.rpc

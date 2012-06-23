@@ -31,9 +31,9 @@ public class SongScore implements EntryPoint {
             + "connection and try again.";
 
     /**
-     * Create a remote service proxy to talk to the server-side Greeting service.
+     * Create a remote service proxy to talk to the server-side song service.
      */
-    private final GreetingServiceAsync greetingService = GWT.create(GreetingService.class);
+    private final SongServiceAsync songService = GWT.create(SongService.class);
 
     /**
      * This is the entry point method.
@@ -122,7 +122,7 @@ public class SongScore implements EntryPoint {
                 // Then, we send the input to the server.
                 sendButton.setEnabled(false);
                 serverResponseLabel.setText("");
-                greetingService.greetServer(textToServer, new AsyncCallback<String>() {
+                songService.songServer(textToServer, new AsyncCallback<String>() {
                     @Override
                     public void onFailure(Throwable caught) {
                         // Show the RPC error message to the user
