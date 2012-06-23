@@ -9,3 +9,4 @@ log.txt*
 gwt-unitCache/
 www-test/
 war/songscore/
+war/WEB-INF/deploy/
