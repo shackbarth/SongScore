@@ -16,6 +16,7 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.songscoreapp.client.resources.AbcjsBundle;
+import com.songscoreapp.client.resources.TestScriptBundle;
 import com.songscoreapp.shared.FieldVerifier;
 
 /**
@@ -40,6 +41,9 @@ public class SongScore implements EntryPoint {
      */
     @Override
     public void onModuleLoad() {
+        TestScriptBundle testBundle = GWT.create(TestScriptBundle.class);
+        JavascriptInjector.inject(testBundle.testscript().getText());
+
         AbcjsBundle bundle = GWT.create(AbcjsBundle.class);
         JavascriptInjector.inject(bundle.abcjs().getText());
 
@@ -153,9 +157,6 @@ public class SongScore implements EntryPoint {
     }
 
     native String renderAbcjs(String abcString) /*-{
-
-      alert("start rendering abc");
-      renderAbc("errorLabelContainer", abcString, null, null, null);
-
+      $wnd.renderAbc("errorLabelContainer", abcString, null, null, {startingTune: 0});
     }-*/;
 }
