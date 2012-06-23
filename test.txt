@@ -1,0 +1,11 @@
+.classpath
+log.txt*
+*.pem
+*.orig
+*.swp
+*.swo
+*.class
+.gwt
+war
+gwt-unitCache/
+www-test/
