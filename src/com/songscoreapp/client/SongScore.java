@@ -9,12 +9,9 @@ import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.DialogBox;
-import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
-import com.google.gwt.user.client.ui.VerticalPanel;
 import com.songscoreapp.client.resources.AbcjsBundle;
 import com.songscoreapp.shared.FieldVerifier;
 
@@ -57,44 +54,18 @@ public class SongScore implements EntryPoint {
         RootPanel.get("buttonContainer").add(sendButton);
         RootPanel.get("errorLabelContainer").add(errorLabel);
 
-        // Focus the cursor on the name field when the app loads
+        // Focus the cursor on the lyrics field when the app loads
         lyricsField.setFocus(true);
         lyricsField.selectAll();
 
-        // Create the popup dialog box
-        final DialogBox dialogBox = new DialogBox();
-        dialogBox.setText("Remote Procedure Call");
-        dialogBox.setAnimationEnabled(true);
-        final Button closeButton = new Button("Close");
-        // We can set the id of a widget by accessing its Element
-        closeButton.getElement().setId("closeButton");
-        final HTML serverResponseLabel = new HTML();
-        VerticalPanel dialogVPanel = new VerticalPanel();
-        dialogVPanel.addStyleName("dialogVPanel");
-        dialogVPanel.add(new HTML("<b>Here's your song in abc:</b>"));
-        dialogVPanel.add(serverResponseLabel);
-        dialogVPanel.setHorizontalAlignment(VerticalPanel.ALIGN_RIGHT);
-        dialogVPanel.add(closeButton);
-        dialogBox.setWidget(dialogVPanel);
-
-        // Add a handler to close the DialogBox
-        closeButton.addClickHandler(new ClickHandler() {
-            @Override
-            public void onClick(ClickEvent event) {
-                dialogBox.hide();
-                sendButton.setEnabled(true);
-                sendButton.setFocus(true);
-            }
-        });
-
-        // Create a handler for the sendButton and nameField
+        // Create a handler for the sendButton and lyricsField
         class MyHandler implements ClickHandler, KeyUpHandler {
             /**
              * Fired when the user clicks on the sendButton.
              */
             @Override
             public void onClick(ClickEvent event) {
-                sendNameToServer();
+                requestSong();
             }
 
             /**
@@ -103,14 +74,14 @@ public class SongScore implements EntryPoint {
             @Override
             public void onKeyUp(KeyUpEvent event) {
                 if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
-                    sendNameToServer();
+                    requestSong();
                 }
             }
 
             /**
-             * Send the name from the nameField to the server and wait for a response.
+             * Send the line of lyrics to the server and wait for a response.
              */
-            private void sendNameToServer() {
+            private void requestSong() {
                 // First, we validate the input.
                 errorLabel.setText("");
                 String textToServer = lyricsField.getText();
@@ -120,26 +91,15 @@ public class SongScore implements EntryPoint {
                 }
 
                 // Then, we send the input to the server.
-                sendButton.setEnabled(false);
-                serverResponseLabel.setText("");
                 songService.songServer(textToServer, new AsyncCallback<String>() {
                     @Override
                     public void onFailure(Throwable caught) {
                         // Show the RPC error message to the user
-                        dialogBox.setText("Remote Procedure Call - Failure");
-                        serverResponseLabel.addStyleName("serverResponseLabelError");
-                        serverResponseLabel.setHTML(SERVER_ERROR);
-                        dialogBox.center();
-                        closeButton.setFocus(true);
+                        errorLabel.setText(SERVER_ERROR);
                     }
 
                     @Override
                     public void onSuccess(String result) {
-                        //dialogBox.setText("Your song is ready!");
-                        //serverResponseLabel.removeStyleName("serverResponseLabelError");
-                        //serverResponseLabel.setHTML(result);
-                        //dialogBox.center();
-                        //closeButton.setFocus(true);
                         renderAbcjs(result);
                     }
                 });
@@ -154,5 +114,8 @@ public class SongScore implements EntryPoint {
 
     native String renderAbcjs(String abcString) /*-{
       $wnd.renderAbc("songOutputContainer", abcString, null, null, {startingTune: 0});
+      // I'm about 100% sure that there's a more robust way to apply CSS dynamically.
+      $wnd.document.getElementById("songOutputContainer").className += "songSheet";
+      $wnd.location.hash = "#songOutputContainer";
     }-*/;
 }

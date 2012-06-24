@@ -54,6 +54,11 @@ body {
 .submitButton:hover { background-position: 0 -172px; }
 .submitButton:active{ background-position: 0 -336px; }
 
+.songSheet {
+	background-color: white;
+	border: 1px solid black;
+}
+
 #form {
 	width: 630px;
 	height: 150px;

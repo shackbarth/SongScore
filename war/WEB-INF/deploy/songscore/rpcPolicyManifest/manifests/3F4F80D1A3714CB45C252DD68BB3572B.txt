@@ -1,2 +1,0 @@
-serviceClass: com.songscoreapp.client.GreetingService
-path: 2CC5524B82037009B0584546D4779210.gwt.rpc
