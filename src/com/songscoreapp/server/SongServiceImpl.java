@@ -3,7 +3,6 @@ package com.songscoreapp.server;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.songscoreapp.client.SongService;
 import com.songscoreapp.server.generator.MusicGenerator;
-import com.songscoreapp.shared.FieldVerifier;
 
 /**
  * The server side implementation of the RPC service.
@@ -15,7 +14,7 @@ public class SongServiceImpl extends RemoteServiceServlet implements
     @Override
     public String songServer(String input) throws IllegalArgumentException {
         // Verify that the input is valid.
-        if (!FieldVerifier.isValidName(input)) {
+        if (input == null || input.length() < 4) {
             // If the input is not valid, throw an IllegalArgumentException back to
             // the client.
             throw new IllegalArgumentException(

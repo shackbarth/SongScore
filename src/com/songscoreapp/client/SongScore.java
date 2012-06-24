@@ -13,7 +13,6 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.songscoreapp.client.resources.AbcjsBundle;
-import com.songscoreapp.shared.FieldVerifier;
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
@@ -85,7 +84,7 @@ public class SongScore implements EntryPoint {
                 // First, we validate the input.
                 errorLabel.setText("");
                 String textToServer = lyricsField.getText();
-                if (!FieldVerifier.isValidName(textToServer)) {
+                if (textToServer == null || textToServer.length() < 4) {
                     errorLabel.setText("Please enter at least four characters");
                     return;
                 }
