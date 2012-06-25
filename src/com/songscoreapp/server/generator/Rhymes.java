@@ -429,7 +429,6 @@ public class Rhymes {
     };
 
     private static final String[] top1000words = {
-            "NAILING","PALING","FLAILING", "FAILING", "SCALING","TRAILING","ASSAILING","DETAILING","INHALING","PREVAILING","UNFAILING","UNVEILING","UNAVAILING","PALIN",
             "ABLE",
             "ABOUT",
             "ABOVE",

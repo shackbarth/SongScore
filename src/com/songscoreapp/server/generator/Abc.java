@@ -24,7 +24,7 @@ public class Abc {
         abc.append(PREAMBLE1);
         abc.append(seed);
         abc.append(PREAMBLE2);
-        
+
         System.out.println("rhythm: "+ rhythm);
         System.out.println("melody: "+ melody);
 
@@ -33,7 +33,7 @@ public class Abc {
             List<Integer> lineRhythm = rhythm.get(i);
             List<Integer> lineMelody = melody.get(i);
             List<String>  lineLyrics = lyrics.get(i);
-            
+
             System.out.println("lineLyrics: "+ lineLyrics);
 
             String chord1 = "\"" + Util.chordToLetter(chords.get(2 * i)) + "\"";
@@ -53,7 +53,7 @@ public class Abc {
                     eighthNotes += lineRhythm.get(0);
             	}
                 String note = Util.integerToLetter(lineMelody.get(j));
-                
+
                 if (j == lineRhythm.size() - 1) {
                     noteDuration = 16 - lineRhythm.get(j);
                 	//System.out.println("noteDuration: "+ noteDuration);
@@ -119,7 +119,7 @@ public class Abc {
                     }
                 }
 
-                List<String> syllableList = Util.getSyllablesFromWord(lineLyrics.get(wordIndex));
+                List<String> syllableList = SyllableUtil.getSyllablesFromWord(lineLyrics.get(wordIndex));
                 String syllable = syllableList.get(syllableIndex);
                 lyricBuf.append(syllable);
 

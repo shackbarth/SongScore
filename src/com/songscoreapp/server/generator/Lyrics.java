@@ -11,10 +11,16 @@ public class Lyrics {
             line.add(word);
         }
 
+        int syllablesInLine = SyllableUtil.getSyllableCountFromLine(line);
+        ArrayList<String> laLine = new ArrayList<String>();
+        for(int i = 0; i < syllablesInLine; i++) {
+            laLine.add("la");
+        }
+
         ArrayList<ArrayList<String>> lyrics = new ArrayList<ArrayList<String>>();
-        lyrics.add(line);
-        lyrics.add(line);
-        lyrics.add(line);
+        lyrics.add(laLine);
+        lyrics.add(laLine);
+        lyrics.add(laLine);
         lyrics.add(line);
         return lyrics;
     }

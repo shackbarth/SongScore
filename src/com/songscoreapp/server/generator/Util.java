@@ -1,7 +1,5 @@
 package com.songscoreapp.server.generator;
 
-import java.util.ArrayList;
-import java.util.List;
 
 public class Util {
 
@@ -35,40 +33,4 @@ public class Util {
         }
     }
 
-    public static Integer getSyllableCountFromWord(String word) {
-        return 1;
-    }
-
-    public static List<String> getSyllablesFromWord(String word) {
-        List<String> list = new ArrayList<String>();
-        int n = getSyllableCountFromWord(word);
-        if (n == 1) {
-        	list.add(word);
-        	return list;
-        }
-
-        String[] syllables = word.replaceAll("([aeiouyAEIOUY]+)", "$1#").split("#", n);
-        for (String s : syllables) {
-            list.add(s.replaceAll("#", ""));
-        }
-        //list.remove(list.size() - 1);
-        return list;
-    }
-
-    public static Integer getSyllableCountFromLine(List<String> line) {
-        Integer totalSyllables = 0;
-        for(String word : line) {
-            totalSyllables += getSyllableCountFromWord(word);
-        }
-        return totalSyllables;
-    }
-
-    public static Integer getSyllableCountFromLine(String line) {
-        Integer totalSyllables = 0;
-        String[] words = line.split(" ");
-        for(String word : words) {
-            totalSyllables += getSyllableCountFromWord(word);
-        }
-        return totalSyllables;
-    }
 }

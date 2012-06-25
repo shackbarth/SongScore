@@ -17,7 +17,7 @@ public class Rhythm {
         List<List<Integer>> rhythm = new ArrayList<List<Integer>>();
         boolean halfDouble = true;
         for(List<String> line : lyrics) {
-            int syllableCount = Util.getSyllableCountFromLine(line);
+            int syllableCount = SyllableUtil.getSyllableCountFromLine(line);
             List<Integer> rhythmLine = getRhythmLine(syllableCount, halfDouble);
             halfDouble = !halfDouble;
             rhythm.add(rhythmLine);
