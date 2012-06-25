@@ -52,6 +52,11 @@ public class SyllableUtil {
                 syllables.add(clusters.get(0));
                 break;
 
+            } else if(clusters.size() == 2 && clusters.get(1).equals("e") && syllables.size() == 0) {
+                // e.g. the word "the"
+                syllables.add(clusters.get(0) + clusters.get(1));
+                break;
+
             } else if(clusters.size() == 1) {
                 // just a few consonants at the end of the word. Slap this onto the preceding syllable and end
                 String lastSyllable = syllables.remove(syllables.size() - 1);
