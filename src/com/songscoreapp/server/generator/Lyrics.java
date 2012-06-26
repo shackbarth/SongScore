@@ -13,9 +13,12 @@ public class Lyrics {
         }
 
         int syllablesInLine = SyllableUtil.getSyllableCountFromLine(line);
+
+        String[] laWords = new String[] {"blah", "cha", "da", "fah", "ga", "la", "na", "sha", "tra", "what"};
+        String laWord = laWords[(int) (Math.random() * laWords.length)];
         List<String> laLine = new ArrayList<String>();
         for(int i = 0; i < syllablesInLine; i++) {
-            laLine.add("la");
+            laLine.add(laWord);
         }
 
         List<List<String>> lyrics = new ArrayList<List<String>>();

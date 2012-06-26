@@ -5,6 +5,6 @@ import org.junit.Test;
 public class MusicGeneratorTest {
     @Test
     public void testMusicGenerator() {
-        MusicGenerator.getSheetMusicFromInput("This is the good line", 'B');
+        System.out.println(MusicGenerator.getSheetMusicFromInput("This is the good line", 'B'));
     }
 }

@@ -44,6 +44,11 @@ public class SyllableUtilTest {
         assertEquals(testList, SyllableUtil.getSyllablesFromWord("a"));
 
         testList = new ArrayList();
+        testList.add("ya");
+        // TODO: deal with this one
+        //assertEquals(testList, SyllableUtil.getSyllablesFromWord("ya"));
+
+        testList = new ArrayList();
         testList.add("the");
         assertEquals(testList, SyllableUtil.getSyllablesFromWord("the"));
 

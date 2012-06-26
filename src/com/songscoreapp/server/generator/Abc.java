@@ -44,7 +44,6 @@ public class Abc {
             int eighthNotes = 0;
             int measure = 0;
             for (int j = 0; j < lineRhythm.size(); ++j) {
-                System.out.println("placing rhythm event: " + (lineRhythm.get(j)));
             	Integer noteDuration = 0;
                 Integer restDuration = 0;
             	if (j == 0 && lineRhythm.get(j) > 0) {
