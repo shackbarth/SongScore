@@ -1,6 +1,5 @@
 package com.songscoreapp.server.generator;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Abc {
@@ -17,7 +16,7 @@ public class Abc {
      * melody rhythm, and lyrics are parallel lists indexed by note
      * chords are indexed by line
      */
-    public static String getAbc(ArrayList<ArrayList<String>> lyrics, List<Integer> chords,
+    public static String getAbc(List<List<String>> lyrics, List<Integer> chords,
             List<List<Integer>> melody, List<List<Integer>> rhythm, String seed) {
 
         StringBuffer abc = new StringBuffer();
@@ -45,6 +44,7 @@ public class Abc {
             int eighthNotes = 0;
             int measure = 0;
             for (int j = 0; j < lineRhythm.size(); ++j) {
+                System.out.println("placing rhythm event: " + (lineRhythm.get(j)));
             	Integer noteDuration = 0;
                 Integer restDuration = 0;
             	if (j == 0 && lineRhythm.get(j) > 0) {
@@ -57,11 +57,14 @@ public class Abc {
                 if (j == lineRhythm.size() - 1) {
                     noteDuration = 16 - lineRhythm.get(j);
                 	//System.out.println("noteDuration: "+ noteDuration);
-                }
-                else {
+                } else {
                     noteDuration = lineRhythm.get(j + 1) - lineRhythm.get(j);
                 }
-                if (noteDuration > 2) {
+                if (noteDuration > 1 && eighthNotes == 7) {
+                    // notes on the very last upbeat of a bar should always be just 1 beat long
+                    restDuration = noteDuration - 1;
+                    noteDuration = 1;
+                } else if (noteDuration > 2) {
                     restDuration = noteDuration - 2;
                     noteDuration = 2;
                 }
@@ -73,8 +76,7 @@ public class Abc {
 	                    	musicBuf.append(chord2);
 	                    }
 	                    eighthNotes = 0;
-	                }
-	                else if (noteDuration + eighthNotes > 8) {
+	                } else if (noteDuration + eighthNotes > 8) {
 	                    musicBuf.append(note + new Integer(8 - eighthNotes).toString());
 	                    noteDuration -= (8 - eighthNotes);
 	                    musicBuf.append("|");
@@ -85,8 +87,7 @@ public class Abc {
 	                    // there  has to be at least 1 left over...
 	                    musicBuf.append(note + (noteDuration == 1 ? "" : noteDuration.toString()));
 	                    eighthNotes += noteDuration;
-	                }
-	                else {
+	                } else {
 	                    musicBuf.append(note + (noteDuration == 1 ? "" : noteDuration.toString()));
 	                    eighthNotes += noteDuration;
 	                }
@@ -101,6 +102,10 @@ public class Abc {
                         }
                         eighthNotes = 0;
                     }
+                    /*
+                     * I make sure this never happens by keeping all notes on the last upbeat of a
+                     * bar to be eighth notes
+                     *
                     else if (restDuration + eighthNotes > 8) {
                         musicBuf.append("z" + new Integer(8 - eighthNotes).toString());
                         restDuration -= (8 - eighthNotes);
@@ -113,6 +118,7 @@ public class Abc {
                         musicBuf.append("z" + (restDuration == 1 ? "" : restDuration.toString()));
                         eighthNotes += restDuration;
                     }
+                    */
                     else {
                         musicBuf.append("z" + (restDuration == 1 ? "" : restDuration.toString()));
                         eighthNotes += restDuration;

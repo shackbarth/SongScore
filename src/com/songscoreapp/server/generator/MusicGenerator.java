@@ -1,6 +1,5 @@
 package com.songscoreapp.server.generator;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class MusicGenerator {
@@ -9,7 +8,7 @@ public class MusicGenerator {
         String key = "G";
         voicePart = 'B'; // obviously it's a cheat that we secretly change this to bass
 
-        ArrayList<ArrayList<String>> lyrics = Lyrics.getLyrics(goodLine);
+        List<List<String>> lyrics = Lyrics.getLyrics(goodLine);
         List<Integer> chords = Chords.getChords();
         List<List<Integer>> rhythm = Rhythm.getRhythm(lyrics);
         List<List<Integer>> melody = Melody.getMelody(key, voicePart, lyrics, rhythm, chords);
