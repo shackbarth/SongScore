@@ -22,7 +22,7 @@ public class RhymeScraper {
         }
     }
 
-    private static String scrape(String word) throws IOException {
+    public static String scrape(String word) throws IOException {
         StringBuffer sb = new StringBuffer("");
 
         String URL = "http://www.rhymezone.com/r/rhyme.cgi?Word=" + word + "&typeofrhyme=perfect&org1=syl&org2=sl&org3=y";
@@ -45,7 +45,7 @@ public class RhymeScraper {
                     inputLine = inputLine.replace("</b>", "");
                     inputLine = inputLine.substring(inputLine.indexOf('>') + 1);
                     inputLine = inputLine.substring(0, inputLine.indexOf('<'));
-                    sb.append("\"" + inputLine + "\",");
+                    sb.append(inputLine + ",");
 
                 }
             }
@@ -56,7 +56,7 @@ public class RhymeScraper {
         } else {
             return "";
         }
-        return "{\"" + word + "\"," + returnString + "},";
+        return word + "," + returnString;
     }
 
     static String[] wordsToQuery = {"nailing"};

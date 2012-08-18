@@ -2,8 +2,16 @@ package com.songscoreapp.server.generator;
 
 import java.util.ArrayList;
 import java.util.List;
+import com.googlecode.objectify.Objectify;
+import com.songscoreapp.server.objectify.RhymingDictionary;
 
 public class Lyrics {
+
+    RhymingDictionary dictionary;
+
+    public Lyrics(RhymingDictionary dictionary) {
+        this.dictionary = dictionary;
+    }
 
     public static List<List<String>> getLyrics(String goodLine) {
 
@@ -29,4 +37,34 @@ public class Lyrics {
         return lyrics;
     }
 
+    public static String getSignificantWord(String phrase) {
+        String[] words = phrase.split(" ");
+        String significantWord = "";
+        for(String word : words) {
+            if(isCapitalized(word) && word.length() > significantWord.length()) {
+                significantWord = word;
+            } else if(!isCapitalized(significantWord) && word.length() > significantWord.length()) {
+                significantWord = word;
+            }
+        }
+        return significantWord;
+    }
+
+    public static boolean isCapitalized(String word) {
+        return word != null && word.length() > 0 && Character.isUpperCase(word.charAt(0));
+    }
+
+    public void getLyricsNew(String phrase, Objectify ofy) {
+        String[] words = phrase.split(" ");
+        String lastWord = words[words.length - 1];
+        Util.log("Let's see what rhymes with " + lastWord);
+        List<String> rhymes = dictionary.getRhymes(lastWord);
+        for(String rhyme : rhymes) {
+            Util.log(rhyme);
+        }
+
+
+
+        String significantWord = Lyrics.getSignificantWord(phrase);
+    }
 }

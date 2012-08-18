@@ -10,3 +10,5 @@ gwt-unitCache/
 www-test/
 war/songscore/
 war/WEB-INF/deploy/
+war/
+lib/

@@ -26,7 +26,7 @@ public class Rhymes {
             if(contains(phoneme, word.toLowerCase())) {
 
                 for(String rhymer : phoneme) {
-                    if(!rhymer.equalsIgnoreCase(word) && contains(top1000words, rhymer)) {
+                    if(!rhymer.equalsIgnoreCase(word)) {// && contains(top1000words, rhymer)) {
                         matches.add(rhymer);
                     }
                 }
