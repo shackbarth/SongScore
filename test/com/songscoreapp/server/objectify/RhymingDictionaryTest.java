@@ -24,7 +24,7 @@ public class RhymingDictionaryTest {
         ofy = ObjectifyService.begin();
         ObjectifyService.register(Word.class);
         DbLoader dbLoader = new DbLoader(ofy);
-        dbLoader.loadRhymes("src/com/songscoreapp/server/resources/rhymes.txt");
+        dbLoader.loadWords("src/com/songscoreapp/server/resources/rhymes.txt");
         rhymingDictionary = new RhymingDictionary(ofy);
     }
 

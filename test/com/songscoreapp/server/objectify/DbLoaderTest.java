@@ -1,9 +1,7 @@
 package com.songscoreapp.server.objectify;
 
-import static org.junit.Assert.assertEquals;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import com.google.appengine.tools.development.testing.LocalDatastoreServiceTestConfig;
 import com.google.appengine.tools.development.testing.LocalServiceTestHelper;
@@ -27,28 +25,14 @@ public class DbLoaderTest {
     }
 
     @Test
-    public void testLoadRhymes() {
+    public void testLoadWords() {
         Objectify ofy = ObjectifyService.begin();
 
         DbLoader dbLoader = new DbLoader(ofy);
-        dbLoader.loadRhymes("src/com/songscoreapp/server/resources/rhymes.txt");
+        dbLoader.loadWords("src/com/songscoreapp/server/resources/words-full.txt");
 
+        DbLoaderPrep dbLoaderPrep = new DbLoaderPrep(ofy);
+        dbLoaderPrep.printAllWords();
 
-        Word fetched = ofy.get(Word.class, 1);
-        System.out.println(fetched.word);
-
-    }
-
-    @Ignore
-    @Test
-    public void testLoadPopular() {
-        Objectify ofy = ObjectifyService.begin();
-        //ObjectifyService.register(Word.class);
-
-        DbLoader dbLoader = new DbLoader(ofy);
-        dbLoader.loadPopular("src/com/songscoreapp/server/resources/top1000.txt", 1000);
-
-        Word fetched = ofy.query(Word.class).filter("word", "stable").get();
-        assertEquals(fetched.rhymeId, 999);
     }
 }

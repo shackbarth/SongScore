@@ -2,11 +2,8 @@ package com.songscoreapp.server.objectify;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.IOException;
 import com.googlecode.objectify.Objectify;
-import com.songscoreapp.server.generator.RhymeScraper;
 
 public class DbLoader {
     Objectify ofy;
@@ -16,61 +13,24 @@ public class DbLoader {
 
     }
 
-    public void loadRhymes(String filename) {
+    public void loadWords(String filename) {
         try {
             BufferedReader reader = new BufferedReader(new FileReader(new File(filename)));
             String line;
-            int rhymeId = 0;
             while((line = reader.readLine()) != null) {
-                //System.out.println("loading wordset " + rhymeId);
-                line = line.replaceAll("\"", "");
-                String[] words = line.split(",");
-                for(String word : words) {
-                    // Simple create
-                    Word ofyWord = new Word(word, rhymeId);
-                    ofy.put(ofyWord);
-                }
-                rhymeId++;
+                String[] wordSplit = line.split(",");
+                String word = wordSplit[0];
+                int rhymeId = Integer.parseInt(wordSplit[1]);
+                int rhymeCount = Integer.parseInt(wordSplit[2]);
+                int popularity = Integer.parseInt(wordSplit[3]);
+                Word wordToPersist = new Word(word, rhymeId, rhymeCount, popularity);
+                ofy.put(wordToPersist);
             }
 
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (Exception e) {
+        } catch(Exception e) {
             e.printStackTrace();
         }
     }
 
-
-    public void loadPopular(String filename, int popularity) {
-        try {
-            BufferedReader reader = new BufferedReader(new FileReader(new File(filename)));
-            String word;
-            while((word = reader.readLine()) != null) {
-                word = word.toLowerCase();
-
-                // don't put in a word that's already in the DB
-                Word wordInDb = ofy.query(Word.class).filter("word", word).get();
-                if(wordInDb == null) {
-                    String rhymes = RhymeScraper.scrape(word);
-                    System.out.println(rhymes);
-                    String[] rhymeArray = rhymes.split(",");
-                    for(String rhyme : rhymeArray) {
-                        Word wordToPersist = new Word(rhyme, 999);
-                        ofy.put(wordToPersist);
-                    }
-                }
-
-                //Word ofyWord = new Word(word, rhymeId);
-                //ofy.put(ofyWord);
-            }
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
 }

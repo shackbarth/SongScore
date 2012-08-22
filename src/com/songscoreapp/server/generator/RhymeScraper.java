@@ -22,10 +22,20 @@ public class RhymeScraper {
         }
     }
 
+
+    /**
+     *
+     * Bug in RhymeZone: we have to ask for phrases then throw out everything with a space.
+     * Without phrases RhymeZone doesn't understand that your rhymes with for
+     *
+     * @param word
+     * @return
+     * @throws IOException
+     */
     public static String scrape(String word) throws IOException {
         StringBuffer sb = new StringBuffer("");
 
-        String URL = "http://www.rhymezone.com/r/rhyme.cgi?Word=" + word + "&typeofrhyme=perfect&org1=syl&org2=sl&org3=y";
+        String URL = "http://www.rhymezone.com/r/rhyme.cgi?Word=" + word + "&typeofrhyme=perfect&org1=syl&org2=l&org3=y";
         URL site = new URL(URL);
         URLConnection connection = site.openConnection();
 
@@ -38,15 +48,16 @@ public class RhymeScraper {
             if(inputLine.contains("words ending with")) {
                 listening = false;
             }
-            if(listening || inputLine.contains("Words that rhyme with")) {
+            if(listening || inputLine.contains("Words and phrases that rhyme with")) {
                 listening = true;
                 if(inputLine.contains("A HREF")) {
                     inputLine = inputLine.replace("<b>", "");
                     inputLine = inputLine.replace("</b>", "");
                     inputLine = inputLine.substring(inputLine.indexOf('>') + 1);
                     inputLine = inputLine.substring(0, inputLine.indexOf('<'));
-                    sb.append(inputLine + ",");
-
+                    if(!inputLine.contains("&nbsp;")) {
+                        sb.append(inputLine + ",");
+                    }
                 }
             }
         }
