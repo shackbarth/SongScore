@@ -1469,9 +1469,6 @@ chrome,23,23,6513
 comb,23,23,99999
 combe,23,23,99999
 dome,23,23,9488
-Aug 22, 2012 1:08:10 PM com.google.appengine.api.datastore.QueryResultsSourceImpl logChunkSizeWarning
-WARNING: This query does not have a chunk size set in FetchOptions and has returned over 1000 results.  If result sets of this size are common for this query, consider setting a chunk size to improve performance.
-  To disable this warning set the following system property in appengine-web.xml (the value of the property doesn't matter): 'appengine.datastore.disableChunkSizeWarning'
 drome,23,23,99999
 foam,23,23,6742
 gloam,23,23,99999
@@ -13371,6 +13368,7 @@ prevailing,729,25,99999
 unfailing,729,25,99999
 unveiling,729,25,99999
 unavailing,729,25,99999
+palin,729,25,99999
 longer,730,2,1527
 stronger,730,2,6655
 consider,731,6,1528

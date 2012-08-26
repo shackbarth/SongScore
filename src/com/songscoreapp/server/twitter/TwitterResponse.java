@@ -1,4 +1,4 @@
-package com.songscoreapp.server.generator;
+package com.songscoreapp.server.twitter;
 
 import java.util.List;
 

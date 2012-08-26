@@ -25,7 +25,8 @@ public class DbLoaderPrepTest {
         helper.tearDown();
     }
 
-
+    // This takes hours and only needs to be one once ever
+    @Ignore
     @Test
     public void testLoadRhymes() {
         Objectify ofy = ObjectifyService.begin();

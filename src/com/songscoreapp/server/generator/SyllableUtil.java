@@ -16,6 +16,9 @@ public class SyllableUtil {
 
     public static Integer getSyllableCountFromLine(String line) {
         Integer totalSyllables = 0;
+        if(line == null || line.length() == 0) {
+            return 0;
+        }
         String[] words = line.split(" ");
         for(String word : words) {
             totalSyllables += getSyllableCountFromWord(word);

@@ -1,7 +1,5 @@
 package com.songscoreapp.server.objectify;
 
-import static org.junit.Assert.assertEquals;
-import java.util.Arrays;
 import java.util.List;
 import org.junit.After;
 import org.junit.Before;
@@ -22,9 +20,12 @@ public class RhymingDictionaryTest {
     public void setUp() {
         helper.setUp();
         ofy = ObjectifyService.begin();
-        ObjectifyService.register(Word.class);
+        try {
+            ObjectifyService.register(Word.class);
+        } catch(IllegalArgumentException e) {
+        }
         DbLoader dbLoader = new DbLoader(ofy);
-        dbLoader.loadWords("src/com/songscoreapp/server/resources/rhymes.txt");
+        dbLoader.loadWords("src/com/songscoreapp/server/resources/words-full.txt");
         rhymingDictionary = new RhymingDictionary(ofy);
     }
 
@@ -35,9 +36,14 @@ public class RhymingDictionaryTest {
 
     @Test
     public void testObjectify() {
-        List<String> expectedRhymes = Arrays.asList(new String[] {"rat", "cat"});
         List<String> actualRhymes = rhymingDictionary.getRhymes("at");
-        assertEquals(expectedRhymes, actualRhymes);
+        assert(actualRhymes.indexOf("rat") >= 0);
+    }
 
+    // for historical reasons this word has to be in there
+    @Test
+    public void testObjectifyPalin() {
+        List<String> actualRhymes = rhymingDictionary.getRhymes("Palin");
+        assert(actualRhymes.indexOf("mailing") >= 0);
     }
 }
