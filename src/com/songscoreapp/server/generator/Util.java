@@ -1,5 +1,7 @@
 package com.songscoreapp.server.generator;
 
+import java.util.List;
+
 
 public class Util {
 
@@ -35,5 +37,11 @@ public class Util {
 
     public static void log(String s) {
         System.out.println("Log: " + s);
+    }
+
+    public static void log(String label, List<String> list) {
+        for(String s : list) {
+            System.out.println(label + s);
+        }
     }
 }

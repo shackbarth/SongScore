@@ -138,40 +138,54 @@ public class Lyrics {
         Util.log(rhymes != null ? rhymes.toString() : "Um, I need to look this word up.");
 
         String significantWord = getSignificantWord(seedLine);
-        Util.log("This song should be mostly about " + significantWord);
+        Util.log("Let's write a song on the theme of " + significantWord);
 
         List<String> fullLines = new ArrayList<String>();
         for(String rhyme: rhymes) {
             List<String> fragments = TwitterUtil.getTwitterLines(significantWord, rhyme, true);
             fullLines.addAll(fragments);
+        }
 
-            //Util.log("Here are some kickass lines:");
-            //Util.log(trimmedLines.toString());
-            //for(String line : trimmedLines) {
-            //    Util.log(line);
-            //}
+        List<List<String>> verses = assembleVerses(seedLine, fullLines, rhymes, true);
+        if(verses.get(verses.size() - 1).get(0).equals("__Leads__")) {
+            List<String> leads = verses.remove(verses.size() - 1);
+            leads.remove(0); // this was the __leads__ label
+            // TODO: recurse prettily
+            for(String secondarySeedLine : leads) {
+                String[] secondaryWords = secondarySeedLine.split("\\s+");
+                String secondaryLastWord = secondaryWords[secondaryWords.length - 1];
 
-            //List<List<String>> groupedLines = groupLinesByRhyme(uniqueFragments, rhymes);
+                Util.log("Let's see what rhymes with " + secondaryLastWord);
+                List<String> secondaryRhymes = dictionary.getRhymes(secondaryLastWord, 10);
+                Util.log(secondaryRhymes != null ? secondaryRhymes.toString() : "Um, I need to look this word up.");
+
+                List<String> secondaryFullLines = new ArrayList<String>();
+                for(String rhyme: secondaryRhymes) {
+                    List<String> fragments = TwitterUtil.getTwitterLines(significantWord, rhyme, true);
+                    secondaryFullLines.addAll(fragments);
+                    verses.addAll(assembleVerses(secondarySeedLine, secondaryFullLines, secondaryRhymes, false));
+                }
+            }
 
         }
 
-        return assembleLines(seedLine, fullLines, rhymes);
-
+        return verses;
     }
 
 
     public static int IDEAL_LINE_LENGTH = 7;
     public static int SYLLABLE_DIFFERENCE_THRESHOLD = 2;
-    public static List<List<String>> assembleLines(String seedLine, List<String> fullLines, List<String> rhymes) {
-        List<List<String>> verses = getVersesFromLines(seedLine, TwitterUtil.chopLines(fullLines, null), rhymes);
+    public List<List<String>> assembleVerses(String seedLine, List<String> fullLines, List<String> rhymes, boolean lookForLeads) {
+        List<List<String>> verses = getVersesFromLines(seedLine, TwitterUtil.chopLines(fullLines, null), rhymes, lookForLeads);
         if(verses.size() == 0) {
             System.out.println("tough crowd. Let's try using rhymechopping");
-            verses = getVersesFromLines(seedLine, TwitterUtil.chopLines(fullLines, rhymes), rhymes);
+            verses = getVersesFromLines(seedLine, TwitterUtil.chopLines(fullLines, rhymes), rhymes, lookForLeads);
         }
         return verses;
     }
 
-    public static List<List<String>> getVersesFromLines(String seedLine, List<String> lines, List<String> rhymes) {
+    public List<List<String>> getVersesFromLines(String seedLine, List<String> lines, List<String> rhymes, boolean lookForLeads) {
+        //Util.log("All lines:", lines);
         boolean seedLineIsDouble = false;
         int lineLength = SyllableUtil.getSyllableCountFromLine(seedLine);
         if(lineLength > 18) {
@@ -187,7 +201,8 @@ public class Lyrics {
         List<List<String>> verses = new ArrayList<List<String>>();
         List<String> doubleLineRhymes = new ArrayList<String>();
         List<String> singleLineRhymes = new ArrayList<String>();
-        List<String> fillerLines = new ArrayList<String>();
+        List<String> doubleLineFiller = new ArrayList<String>();
+        List<String> singleLineFiller = new ArrayList<String>();
 
         List<List<String>> groupedLines = groupLinesByRhyme(lines, rhymes);
 
@@ -198,13 +213,12 @@ public class Lyrics {
                 boolean isRhymingLine = i + 1 < groupedLines.size();
                 if(isRhymingLine && isDoubleLine(syllableCount, targetLength, SYLLABLE_DIFFERENCE_THRESHOLD)) {
                     doubleLineRhymes.add(line);
-                    //Util.log("Rhyming double line! " + line);
                 } else if(isRhymingLine && isSingleLine(syllableCount, targetLength, SYLLABLE_DIFFERENCE_THRESHOLD)) {
                     singleLineRhymes.add(line);
-                    //Util.log("Rhyming single line! " + line);
                 } else if(!isRhymingLine && isSingleLine(syllableCount, targetLength, SYLLABLE_DIFFERENCE_THRESHOLD)) {
-                    fillerLines.add(line);
-                    //Util.log("Nonrhyming single line! " + line);
+                    singleLineFiller.add(line);
+                } else if(!isRhymingLine && isDoubleLine(syllableCount, targetLength, SYLLABLE_DIFFERENCE_THRESHOLD)) {
+                    doubleLineFiller.add(line);
                 }
             }
         }
@@ -213,8 +227,8 @@ public class Lyrics {
             List<String> verse = new ArrayList<String>();
             if(doubleLineRhymes.size() > 0) {
                 verse.addAll(splitLine(doubleLineRhymes.remove(0)));
-            } else if(singleLineRhymes.size() > 0 && fillerLines.size() > 0) {
-                verse.add(fillerLines.remove(0));
+            } else if(singleLineRhymes.size() > 0 && singleLineFiller.size() > 0) {
+                verse.add(singleLineFiller.remove(0));
                 verse.add(singleLineRhymes.remove(0));
             } else {
                 break;
@@ -222,13 +236,19 @@ public class Lyrics {
 
             if(seedLineIsDouble) {
                 verse.addAll(splitLine(seedLine));
-            } else if(fillerLines.size() > 0) {
-                verse.add(fillerLines.remove(0));
+            } else if(singleLineFiller.size() > 0) {
+                verse.add(singleLineFiller.remove(0));
                 verse.add(seedLine);
             } else {
                 break;
             }
             verses.add(trimPhrasePunctuation(verse));
+        }
+        if(lookForLeads) {
+            List<String> leads = dictionary.getTopLeads(doubleLineFiller, 4);
+            leads.add(0, "__Leads__");
+            Util.log("Promising leads:", leads);
+            verses.add(leads);
         }
         return verses;
     }

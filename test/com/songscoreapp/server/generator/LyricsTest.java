@@ -67,7 +67,7 @@ public class LyricsTest {
 
         RhymingDictionary dictionary = new RhymingDictionary(ofy);
         Lyrics lyricWriter = new Lyrics(dictionary);
-        List<List<String>> lyrics = lyricWriter.getLyricsNew("My friend is on a boat but I don't know if I can", ofy);
+        List<List<String>> lyrics = lyricWriter.getLyricsNew("My cousin is a whiz", ofy);
         for(List<String> verse : lyrics) {
             Util.log(verse.toString());
         }

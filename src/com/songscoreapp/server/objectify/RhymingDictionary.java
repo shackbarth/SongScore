@@ -1,6 +1,9 @@
 package com.songscoreapp.server.objectify;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import com.googlecode.objectify.Objectify;
 import com.googlecode.objectify.Query;
@@ -13,7 +16,6 @@ public class RhymingDictionary {
     public RhymingDictionary(Objectify ofy) {
         this.ofy = ofy;
     }
-
 
     public List<String> getRhymes(String word) {
         return getRhymes(word, 999999);
@@ -33,7 +35,47 @@ public class RhymingDictionary {
             }
         }
 
-
         return rhymes;
+    }
+
+
+    public List<String> getTopLeads(List<String> leads, int limit) {
+        // quality list is {leadIndex, quality}
+        List<int[]> qualityList = new ArrayList<int[]>(leads.size());
+        for(int i = 0; i < leads.size(); i++) {
+            qualityList.add(new int[] {i, getLineQuality(leads.get(i))});
+        }
+        Collections.sort(qualityList, new Comparator<int[]>() {
+            @Override
+            public int compare(int[] a1, int[] a2) {
+                return a2[1] - a1[1];
+            }
+        });
+
+        List<String> topLeads = new ArrayList<String>();
+        for(int i = 0; i < limit && i < leads.size(); i++) {
+            int leadIndex = qualityList.get(i)[0];
+            topLeads.add(leads.get(leadIndex));
+        }
+        return topLeads;
+    }
+
+    List<String> lousyWords = Arrays.asList(new String[] {"in", "a", "the", "to", "for", "on"});
+
+    public int getLineQuality(String line) {
+        String[] words = line.split("\\s+");
+        String lastWord = words[words.length - 1];
+        return getWordQuality(lastWord);
+    }
+    public int getWordQuality(String word) {
+        if(lousyWords.indexOf(word) >= 0) {
+            return -1;
+        }
+        int rhymeCount = 0;
+        Query<Word> q = ofy.query(Word.class).filter("word", word);
+        for (Word wordFromDb : q) {
+            rhymeCount += wordFromDb.getRhymeCount();
+        }
+        return rhymeCount;
     }
 }

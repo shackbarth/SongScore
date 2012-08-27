@@ -1,6 +1,5 @@
 package com.songscoreapp.server.twitter;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -27,7 +26,7 @@ public class TwitterUtil {
                 }
             }
 
-        } catch (IOException e) {
+        } catch (Exception e) {
             // oh well
             e.printStackTrace();
         }
