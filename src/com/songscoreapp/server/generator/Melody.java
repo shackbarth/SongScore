@@ -12,7 +12,7 @@ public class Melody {
      *
      * Each voice part will have its own range limitations
      */
-    public static List<List<Integer>> getMelody(String key, Character voicePart, List<List<String>> lyrics,
+    public static List<List<Integer>> getMelody(String key, Character voicePart, List<String> lyrics,
             List<List<Integer>> rhythm, List<Integer> chords) {
         // TODO: allow other voice parts
         if(!key.equals("G") || !voicePart.equals('B')) {

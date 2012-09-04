@@ -129,7 +129,7 @@ public class Lyrics {
         return word != null && word.length() > 0 && Character.isUpperCase(word.charAt(0));
     }
 
-    public List<List<String>> getLyricsNew(String seedLine, Objectify ofy) {
+    public List<List<String>> getAllLyrics(String seedLine, Objectify ofy) {
         String[] words = seedLine.split("\\s+");
         String lastWord = words[words.length - 1];
 
@@ -150,21 +150,31 @@ public class Lyrics {
         if(verses.get(verses.size() - 1).get(0).equals("__Leads__")) {
             List<String> leads = verses.remove(verses.size() - 1);
             leads.remove(0); // this was the __leads__ label
-            // TODO: recurse prettily
+            // TODO: recurse prettily?
             for(String secondarySeedLine : leads) {
                 String[] secondaryWords = secondarySeedLine.split("\\s+");
                 String secondaryLastWord = secondaryWords[secondaryWords.length - 1];
 
                 Util.log("Let's see what rhymes with " + secondaryLastWord);
                 List<String> secondaryRhymes = dictionary.getRhymes(secondaryLastWord, 10);
-                Util.log(secondaryRhymes != null ? secondaryRhymes.toString() : "Um, I need to look this word up.");
+                if(secondaryRhymes == null) {
+                    Util.log("Um, I need to look this word up.");
+                    continue;
+                }
+                Util.log(secondaryRhymes.toString());
 
                 List<String> secondaryFullLines = new ArrayList<String>();
                 for(String rhyme: secondaryRhymes) {
                     List<String> fragments = TwitterUtil.getTwitterLines(significantWord, rhyme, true);
                     secondaryFullLines.addAll(fragments);
-                    verses.addAll(assembleVerses(secondarySeedLine, secondaryFullLines, secondaryRhymes, false));
                 }
+
+                List<List<String>> secondaryVerses = assembleVerses(secondarySeedLine, secondaryFullLines, secondaryRhymes, false);
+                if(secondaryVerses.size() > 0) {
+                    // just add one verse for each secondary seed. These will become our refrains
+                    verses.add(secondaryVerses.get(0));
+                }
+
             }
 
         }
@@ -245,7 +255,10 @@ public class Lyrics {
             verses.add(trimPhrasePunctuation(verse));
         }
         if(lookForLeads) {
-            List<String> leads = dictionary.getTopLeads(doubleLineFiller, 4);
+            // when treating a line as a possible lead we give ourselves the best
+            // chance of it working out by stripping out the punctuation before we
+            // evaluate it as a lead.
+            List<String> leads = dictionary.getTopLeads(trimPhrasePunctuation(doubleLineFiller), 5);
             leads.add(0, "__Leads__");
             Util.log("Promising leads:", leads);
             verses.add(leads);

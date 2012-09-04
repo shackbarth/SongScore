@@ -1,5 +1,6 @@
 package com.songscoreapp.server.generator;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class Abc {
@@ -16,7 +17,7 @@ public class Abc {
      * melody rhythm, and lyrics are parallel lists indexed by note
      * chords are indexed by line
      */
-    public static String getAbc(List<List<String>> lyrics, List<Integer> chords,
+    public static String getAbc(List<String> lyrics, List<Integer> chords,
             List<List<Integer>> melody, List<List<Integer>> rhythm, String seed) {
 
         StringBuffer abc = new StringBuffer();
@@ -31,7 +32,8 @@ public class Abc {
             int wordIndex = 0;
             List<Integer> lineRhythm = rhythm.get(i);
             List<Integer> lineMelody = melody.get(i);
-            List<String>  lineLyrics = lyrics.get(i);
+            String  lineLyricsAsString = lyrics.get(i);
+            List<String> lineLyrics = Arrays.asList(lineLyricsAsString.split("\\s+"));
 
             System.out.println("lineLyrics: "+ lineLyrics);
 

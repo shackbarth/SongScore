@@ -55,7 +55,11 @@ public class RhymingDictionary {
         List<String> topLeads = new ArrayList<String>();
         for(int i = 0; i < limit && i < leads.size(); i++) {
             int leadIndex = qualityList.get(i)[0];
-            topLeads.add(leads.get(leadIndex));
+            int quality = qualityList.get(i)[1];
+            if(quality > 0) {
+                //Util.log("Adding lead " + leads.get(leadIndex) + " of quality " + quality);
+                topLeads.add(leads.get(leadIndex));
+            }
         }
         return topLeads;
     }

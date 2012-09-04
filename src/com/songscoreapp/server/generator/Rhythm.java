@@ -21,10 +21,10 @@ public class Rhythm {
      * {1, 8} means that there's a note on the upbeat of 1 and the downbeat of the second bar
      * these numbers can therefore range from 0 to 15.
      */
-    public static List<List<Integer>> getRhythm(List<List<String>> lyrics) {
+    public static List<List<Integer>> getRhythm(List<String> lyrics) {
         List<List<Integer>> rhythm = new ArrayList<List<Integer>>();
         boolean halfDouble = true;
-        for(List<String> line : lyrics) {
+        for(String line : lyrics) {
             int syllableCount = SyllableUtil.getSyllableCountFromLine(line);
             List<Integer> rhythmLine = getRhythmLine(syllableCount, halfDouble);
             halfDouble = !halfDouble;
