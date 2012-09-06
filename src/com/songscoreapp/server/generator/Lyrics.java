@@ -15,30 +15,6 @@ public class Lyrics {
         this.dictionary = dictionary;
     }
 
-    public static List<List<String>> getLyrics(String goodLine) {
-
-        List<String> line = new ArrayList<String>();
-        for(String word : goodLine.split(" ")) {
-            line.add(word);
-        }
-
-        int syllablesInLine = SyllableUtil.getSyllableCountFromLine(line);
-
-        String[] laWords = new String[] {"blah", "cha", "da", "fah", "ga", "la", "na", "sha", "tra", "what"};
-        String laWord = laWords[(int) (Math.random() * laWords.length)];
-        List<String> laLine = new ArrayList<String>();
-        for(int i = 0; i < syllablesInLine; i++) {
-            laLine.add(laWord);
-        }
-
-        List<List<String>> lyrics = new ArrayList<List<String>>();
-        lyrics.add(laLine);
-        lyrics.add(laLine);
-        lyrics.add(laLine);
-        lyrics.add(line);
-        return lyrics;
-    }
-
     /**
      * Finds the most significant word from a phrase.
      *
@@ -129,6 +105,24 @@ public class Lyrics {
         return word != null && word.length() > 0 && Character.isUpperCase(word.charAt(0));
     }
 
+    private List<List<String>> getLastResortLyrics(String seedLine) {
+        List<List<String>> lyrics = new ArrayList<List<String>>();
+
+        List<String> verse = Arrays.asList(new String[] {
+                "la la la la la la la la",
+                "la la la la la la la la",
+                "la la la la la la la la",
+                seedLine
+        });
+
+        lyrics.add(verse);
+        lyrics.add(verse);
+        lyrics.add(verse);
+        lyrics.add(verse);
+        lyrics.add(verse);
+        return lyrics;
+    }
+
     public List<List<String>> getAllLyrics(String seedLine, Objectify ofy) {
         String[] words = seedLine.split("\\s+");
         String lastWord = words[words.length - 1];
@@ -137,6 +131,9 @@ public class Lyrics {
         List<String> rhymes = dictionary.getRhymes(lastWord, 10);
         Util.log(rhymes != null ? rhymes.toString() : "Um, I need to look this word up.");
 
+        if(rhymes == null) {
+            return getLastResortLyrics(seedLine);
+        }
         String significantWord = getSignificantWord(seedLine);
         Util.log("Let's write a song on the theme of " + significantWord);
 

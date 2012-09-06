@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import com.googlecode.objectify.Objectify;
 import com.googlecode.objectify.ObjectifyService;
-import com.songscoreapp.server.objectify.DbLoader;
 import com.songscoreapp.server.objectify.RhymingDictionary;
 import com.songscoreapp.server.objectify.Word;
 
@@ -14,6 +13,17 @@ public class MusicGenerator {
     Objectify ofy;
     RhymingDictionary dictionary;
     Lyrics lyricWriter;
+
+    public MusicGenerator(Objectify ofy) {
+        super();
+        this.ofy = ofy;
+        try {
+            ObjectifyService.register(Word.class);
+        } catch(IllegalArgumentException e) {
+        }
+        dictionary = new RhymingDictionary(ofy);
+        lyricWriter = new Lyrics(dictionary);
+    }
 
     public MusicGenerator() {
         super();
@@ -29,12 +39,6 @@ public class MusicGenerator {
 
 
     public String getSheetMusicFromInput(String goodLine, Character voicePart) {
-        if(goodLine != null && goodLine.equals("Admin: load words")) {
-            DbLoader loader = new DbLoader(ofy);
-            loader.loadWords("src/com/songscoreapp/server/resources/words-full.txt"); // XXX am I allowed to do this?
-            return null;
-        }
-
 
         String key = "G";
         voicePart = 'B'; // obviously it's a cheat that we secretly change this to bass

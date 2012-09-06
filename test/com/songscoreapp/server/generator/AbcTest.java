@@ -2,6 +2,7 @@ package com.songscoreapp.server.generator;
 
 import static org.junit.Assert.assertTrue;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import org.junit.Test;
 
@@ -9,12 +10,7 @@ public class AbcTest {
 
     @Test
     public void testMe() {
-        List<String> lyricLine = new ArrayList<String>();
-        for(int i = 0; i < 7; i++) {
-            lyricLine.add("la");
-        }
-        List<List<String>> lyrics = new ArrayList<List<String>>();
-        lyrics.add(lyricLine);
+        List<String> lyrics = Arrays.asList(new String[] {"la la la la la la la"});
 
         List<Integer> chords = new ArrayList<Integer>();
         chords.add(1);
