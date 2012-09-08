@@ -1,5 +1,7 @@
 package com.songscoreapp.server.objectify;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,7 +18,11 @@ public class DbLoaderTest {
     @Before
     public void setUp() {
         helper.setUp();
-        ObjectifyService.register(Word.class);
+        try {
+            ObjectifyService.register(Word.class);
+        } catch(Exception e) {
+
+        }
     }
 
     @After
@@ -29,10 +35,18 @@ public class DbLoaderTest {
         Objectify ofy = ObjectifyService.begin();
 
         DbLoader dbLoader = new DbLoader(ofy);
-        dbLoader.loadWords("src/com/songscoreapp/server/resources/words-full.txt");
+        boolean success = dbLoader.loadWords("war/resources/words-full.txt");
+        assertTrue(success);
+    }
 
-        DbLoaderPrep dbLoaderPrep = new DbLoaderPrep(ofy);
-        dbLoaderPrep.printAllWords();
+    @Test
+    public void testLoadWordsDouble() {
+        Objectify ofy = ObjectifyService.begin();
 
+        DbLoader dbLoader = new DbLoader(ofy);
+        dbLoader.loadWords("war/resources/words-full.txt");
+        boolean success = dbLoader.loadWords("war/resources/words-full.txt");
+
+        assertFalse(success);
     }
 }

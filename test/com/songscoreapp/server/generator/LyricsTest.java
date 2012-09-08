@@ -6,7 +6,6 @@ import java.util.Arrays;
 import java.util.List;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import com.google.appengine.tools.development.testing.LocalDatastoreServiceTestConfig;
 import com.google.appengine.tools.development.testing.LocalServiceTestHelper;
@@ -62,15 +61,18 @@ public class LyricsTest {
 
     @Test
     public void testLyrics() {
+        final int stanzaCount = 7;
+
         DbLoader dbLoader = new DbLoader(ofy);
         dbLoader.loadWords("src/com/songscoreapp/server/resources/words-full.txt");
 
         RhymingDictionary dictionary = new RhymingDictionary(ofy);
         Lyrics lyricWriter = new Lyrics(dictionary);
-        List<List<String>> lyrics = lyricWriter.getAllLyrics("I love Bieber so crazy", ofy);
+        List<List<String>> lyrics = lyricWriter.getAllLyrics("I love Bieber so crazy", ofy, stanzaCount);
         for(List<String> verse : lyrics) {
             Util.log(verse.toString());
         }
+        assertEquals(stanzaCount, lyrics.size());
     }
 
     @Test
@@ -85,7 +87,6 @@ public class LyricsTest {
         assertEquals(expectedResult, Lyrics.splitLine("la la la lala lala la la la ra"));
     }
 
-    @Ignore
     @Test
     public void testGroupLinesByRhyme() {
         List<String> lines = Arrays.asList(new String[] {

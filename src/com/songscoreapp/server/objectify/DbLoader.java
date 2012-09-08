@@ -13,7 +13,18 @@ public class DbLoader {
 
     }
 
-    public void loadWords(String filename) {
+    public boolean loadWords(String filename) {
+
+
+        //
+        // don't load any words if the database is at all populated already
+        //
+        Word wordInDb = ofy.query(Word.class).get();
+        if(wordInDb != null) {
+            return false;
+        }
+
+
         try {
             BufferedReader reader = new BufferedReader(new FileReader(new File(filename)));
             String line;
@@ -30,6 +41,7 @@ public class DbLoader {
         } catch(Exception e) {
             e.printStackTrace();
         }
+        return true;
     }
 
 

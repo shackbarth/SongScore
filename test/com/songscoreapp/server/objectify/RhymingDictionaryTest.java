@@ -5,7 +5,6 @@ import java.util.Arrays;
 import java.util.List;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import com.google.appengine.tools.development.testing.LocalDatastoreServiceTestConfig;
 import com.google.appengine.tools.development.testing.LocalServiceTestHelper;
@@ -37,15 +36,12 @@ public class RhymingDictionaryTest {
         helper.tearDown();
     }
 
-    @Ignore
     @Test
     public void testObjectify() {
         List<String> actualRhymes = rhymingDictionary.getRhymes("at");
         assert(actualRhymes.indexOf("rat") >= 0);
     }
 
-    // for historical reasons this word has to be in there
-    @Ignore
     @Test
     public void testObjectifyPalin() {
         List<String> actualRhymes = rhymingDictionary.getRhymes("Palin");

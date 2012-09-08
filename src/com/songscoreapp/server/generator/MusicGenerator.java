@@ -10,6 +10,8 @@ import com.songscoreapp.server.objectify.Word;
 public class MusicGenerator {
 
     static private final String SONG_STRUCTURE = "VVRVRVRR";
+    static private final int STANZA_COUNT = 5;
+
     Objectify ofy;
     RhymingDictionary dictionary;
     Lyrics lyricWriter;
@@ -50,7 +52,7 @@ public class MusicGenerator {
 
         List<Integer> refrainChords = Chords.getChords();
         int verseIndex = 0;
-        List<List<String>> allLyrics = lyricWriter.getAllLyrics(goodLine, ofy);
+        List<List<String>> allLyrics = lyricWriter.getAllLyrics(goodLine, ofy, STANZA_COUNT);
         List<String> refrainLyrics = allLyrics.get(verseIndex++);
         List<List<Integer>> refrainRhythm = Rhythm.getRhythm(refrainLyrics);
         List<List<Integer>> refrainMelody = Melody.getMelody(key, voicePart, refrainLyrics, refrainRhythm, refrainChords);

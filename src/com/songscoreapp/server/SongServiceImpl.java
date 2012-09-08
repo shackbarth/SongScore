@@ -30,8 +30,8 @@ public class SongServiceImpl extends RemoteServiceServlet implements
 
         if(input != null && input.equals("Admin: load words")) {
             DbLoader loader = new DbLoader(ofy);
-            loader.loadWords("src/com/songscoreapp/server/resources/words-full.txt"); // XXX am I allowed to do this?
-            return null;
+            loader.loadWords("resources/words-full.txt"); // XXX am I allowed to do this?
+            return "";
         }
 
         // Escape data from the client to avoid cross-site script vulnerabilities.

@@ -105,8 +105,18 @@ public class Lyrics {
         return word != null && word.length() > 0 && Character.isUpperCase(word.charAt(0));
     }
 
-    private List<List<String>> getLastResortLyrics(String seedLine) {
+    private List<List<String>> getLastResortLyrics(String seedLine, int verseCount) {
         List<List<String>> lyrics = new ArrayList<List<String>>();
+
+        List<String> verse = getLastResortVerse(seedLine);
+
+        for(int i = 0; i < verseCount; i++) {
+            lyrics.add(verse);
+        }
+        return lyrics;
+    }
+
+    private List<String> getLastResortVerse(String seedLine) {
 
         List<String> verse = Arrays.asList(new String[] {
                 "la la la la la la la la",
@@ -115,15 +125,10 @@ public class Lyrics {
                 seedLine
         });
 
-        lyrics.add(verse);
-        lyrics.add(verse);
-        lyrics.add(verse);
-        lyrics.add(verse);
-        lyrics.add(verse);
-        return lyrics;
+        return verse;
     }
 
-    public List<List<String>> getAllLyrics(String seedLine, Objectify ofy) {
+    public List<List<String>> getAllLyrics(String seedLine, Objectify ofy, int stanzaCount) {
         String[] words = seedLine.split("\\s+");
         String lastWord = words[words.length - 1];
 
@@ -132,7 +137,7 @@ public class Lyrics {
         Util.log(rhymes != null ? rhymes.toString() : "Um, I need to look this word up.");
 
         if(rhymes == null) {
-            return getLastResortLyrics(seedLine);
+            return getLastResortLyrics(seedLine, stanzaCount);
         }
         String significantWord = getSignificantWord(seedLine);
         Util.log("Let's write a song on the theme of " + significantWord);
@@ -171,11 +176,12 @@ public class Lyrics {
                     // just add one verse for each secondary seed. These will become our refrains
                     verses.add(secondaryVerses.get(0));
                 }
-
             }
-
         }
 
+        while(verses.size() < stanzaCount) {
+            verses.add(getLastResortVerse(seedLine));
+        }
         return verses;
     }
 
