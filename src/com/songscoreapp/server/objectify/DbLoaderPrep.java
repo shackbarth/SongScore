@@ -11,6 +11,17 @@ import com.googlecode.objectify.Objectify;
 import com.googlecode.objectify.Query;
 import com.songscoreapp.server.generator.RhymeScraper;
 
+/**
+ * A class full of functions that only need to be run once ever, to generate
+ * the resources to be used to load the database. This stuff only needs to
+ * be touched if we tweak the algorithm somehow and want to regenerate our
+ * rhyme database rubric.
+ *
+ * A lot of these methods take like 12-16 hours.
+ *
+ * @author shackbarth
+ *
+ */
 public class DbLoaderPrep {
 
     // This is an iffy technique TBD

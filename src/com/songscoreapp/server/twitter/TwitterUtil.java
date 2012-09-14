@@ -8,7 +8,16 @@ import com.songscoreapp.server.generator.SyllableUtil;
 
 public class TwitterUtil {
 
-
+    /**
+     * The master function that puts all the twitter work together and returns a usable list
+     * of lines
+     *
+     * @param contextWord The word that tries to keep the whole verse on the same-ish topic
+     * @param rhymeWord A word we're looking to use as a rhyme
+     * @param hashtagContext True if we want to try putting a hashtag on the context work. False if we
+     *  need to relax the search.
+     * @return A usable list of lines of lyrics
+     */
     public static List<String> getTwitterLines(String contextWord, String rhymeWord, boolean hashtagContext) {
         List<String> lyrics = new ArrayList<String>();
         String query = (hashtagContext ? "#" : "")
@@ -33,6 +42,12 @@ public class TwitterUtil {
         return lyrics;
     }
 
+    /**
+     * Passes final judgment whether this tweet is really salvageable
+     *
+     * @param line
+     * @return
+     */
     public static boolean isUsableLine(String line) {
         //System.out.println("Is usable? " + line);
         if(line == null || line.length() == 0) {
@@ -61,6 +76,11 @@ public class TwitterUtil {
     }
 
     /**
+     * Tweets are usually too long for a line of lyrics, so we chop them up into usable
+     * chunks. We prefer to chop on punctuation marks, and hopefully some of the lines
+     * will end with a rhyme word. If none do, then we have to "rhymeChop", by chopping
+     * the lines based on the presence of rhymewords. This guarantees rhyming but
+     * sometimes the line feels cutoff which is why we only do it as a last resort.
      *
      * @param lines
      * @param rhymes if null then assume we want to chop on punctuation only
@@ -77,7 +97,12 @@ public class TwitterUtil {
         return choppedLines;
     }
 
-    // TODO: worry about too-short choppings
+    /**
+     * Chop on punctuation
+     *
+     * @param line
+     * @return
+     */
     public static List<String> chopLine(String line) {
         int lineLength = Lyrics.IDEAL_LINE_LENGTH; // TODO: actually get this from input
         if(SyllableUtil.getSyllableCountFromLine(line) <
@@ -153,7 +178,13 @@ public class TwitterUtil {
         return fragment.trim();
     }
 
-
+    /**
+     * The beginning and the end of a typical tweet is full of jargonny junk. Try to
+     * strip that out so only the real text remains.
+     *
+     * @param line
+     * @return
+     */
     public static String stripJunk(String line) {
         List<String> words = Arrays.asList(line.split("\\s+"));
 

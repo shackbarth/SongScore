@@ -17,6 +17,13 @@ public class RhymingDictionary {
         this.ofy = ofy;
     }
 
+    /**
+     * What are all the words that rhyme with this word?
+     *
+     * @param word
+     * @return A list of rhymes sorted by popularity.
+     *
+     */
     public List<String> getRhymes(String word) {
         return getRhymes(word, 999999);
     }
@@ -38,7 +45,13 @@ public class RhymingDictionary {
         return rhymes;
     }
 
-
+    /**
+     * Of all of the leads, which are the most promising?
+     *
+     * @param leads
+     * @param limit Don't return more than this many
+     * @return
+     */
     public List<String> getTopLeads(List<String> leads, int limit) {
         // quality list is {leadIndex, quality}
         List<int[]> qualityList = new ArrayList<int[]>(leads.size());
@@ -66,6 +79,17 @@ public class RhymingDictionary {
 
     List<String> lousyWords = Arrays.asList(new String[] {"in", "a", "the", "to", "for", "on"});
 
+    /**
+     * Rates how good this line is as far as it's rhyming potential. Basically,
+     * how many words does the last word rhyme with?
+     *
+     * TODO: better to rate based on the popularity of the rhymes. This would
+     * require a slightly different DbLoaderPrep algorithm; we'd want to
+     * cache not just the rhymecount but the popularity-weighted rhymecount.
+     *
+     * @param line
+     * @return
+     */
     public int getLineQuality(String line) {
         String[] words = line.split("\\s+");
         String lastWord = words[words.length - 1];

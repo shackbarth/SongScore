@@ -2,6 +2,12 @@ package com.songscoreapp.server.twitter;
 
 import java.util.List;
 
+/**
+ * Utility class for GSON
+ *
+ * @author shackbarth
+ *
+ */
 public class TwitterResponse {
     List<TwitterResponseTweet> results;
 

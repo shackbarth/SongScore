@@ -13,9 +13,14 @@ public class DbLoader {
 
     }
 
+    /**
+     * Load a pre-generated file of rhyming/word-popularity data into the
+     * datastore.
+     *
+     * @param filename
+     * @return
+     */
     public boolean loadWords(String filename) {
-
-
         //
         // don't load any words if the database is at all populated already
         //

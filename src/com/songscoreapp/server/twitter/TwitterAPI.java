@@ -15,12 +15,25 @@ import com.google.gson.stream.MalformedJsonException;
 
 public class TwitterAPI {
 
+    /**
+     *
+     * @param query Something like "#Bieber rocks"
+     * @return
+     * @throws IOException
+     * @throws MalformedJsonException
+     */
     public static List<String> getTweetsFromQuery(String query) throws IOException, MalformedJsonException {
         String url = getFormattedTwitterSearch(query);
         String json = queryTwitter(url);
         return TwitterAPI.parseTwitterJson(json);
     }
 
+    /**
+     * Where the actual twitter URL is kept
+     *
+     * @param query
+     * @return
+     */
     public static String getFormattedTwitterSearch(String query)  {
         try {
             return "http://search.twitter.com/search.json?q=" + URLEncoder.encode(query, "UTF-8");
@@ -30,9 +43,16 @@ public class TwitterAPI {
         }
     }
 
+    /**
+     * Connects to twitter
+     *
+     * @param urlString
+     * @return String of JSON representing the twitter results
+     * @throws IOException
+     */
     public static String queryTwitter(String urlString) throws IOException {
-        URLConnection brickhouseConnection = new URL(urlString).openConnection();
-        BufferedReader in = new BufferedReader(new InputStreamReader(brickhouseConnection.getInputStream()));
+        URLConnection twitterConnection = new URL(urlString).openConnection();
+        BufferedReader in = new BufferedReader(new InputStreamReader(twitterConnection.getInputStream()));
         String json = "";
         String inputLine;
 
@@ -42,6 +62,14 @@ public class TwitterAPI {
         return json;
     }
 
+    /**
+     * We only really care about the contents of the tweets. Return the tweets as a List of
+     * Strings and ignore the rest of the JSON string.
+     *
+     * @param json
+     * @return
+     * @throws EOFException
+     */
     public static List<String> parseTwitterJson(String json) throws EOFException {
         TwitterResponse twitterResponse = new Gson().fromJson(json, TwitterResponse.class);
 

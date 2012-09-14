@@ -15,6 +15,9 @@ public class Lyrics {
         this.dictionary = dictionary;
     }
 
+
+    static private int LAST_NAME = 2000;
+    static private int CAPITALIZED = 1000;
     /**
      * Finds the most significant word from a phrase.
      *
@@ -26,8 +29,6 @@ public class Lyrics {
      * @param phrase
      * @return
      */
-    static private int LAST_NAME = 2000;
-    static private int CAPITALIZED = 1000;
     public static String getSignificantWord(String phrase) {
         String[] words = phrase.split(" ");
         String bestWord = "";
@@ -63,6 +64,12 @@ public class Lyrics {
         return bestWord;
     }
 
+    /**
+     * Gets rid of all the punctuation
+     *
+     * @param phrases
+     * @return
+     */
     public static List<String> trimPhrasePunctuation(List<String> phrases) {
         List<String> trimmedPhrases = new ArrayList<String>();
         for(String phrase : phrases) {
@@ -105,11 +112,17 @@ public class Lyrics {
         return word != null && word.length() > 0 && Character.isUpperCase(word.charAt(0));
     }
 
+    /**
+     * If everything else goes wrong, make up a verse of mostly la la la.
+     *
+     * @param seedLine
+     * @param verseCount
+     * @return
+     */
     private List<List<String>> getLastResortLyrics(String seedLine, int verseCount) {
         List<List<String>> lyrics = new ArrayList<List<String>>();
 
         List<String> verse = getLastResortVerse(seedLine);
-
         for(int i = 0; i < verseCount; i++) {
             lyrics.add(verse);
         }
@@ -117,17 +130,22 @@ public class Lyrics {
     }
 
     private List<String> getLastResortVerse(String seedLine) {
-
         List<String> verse = Arrays.asList(new String[] {
                 "la la la la la la la la",
                 "la la la la la la la la",
                 "la la la la la la la la",
                 seedLine
         });
-
         return verse;
     }
 
+    /**
+     * The master function that puts it all together.
+     * @param seedLine The one good line of input from the user
+     * @param ofy
+     * @param stanzaCount This is how many stanzas of lyrics have been requested
+     * @return
+     */
     public List<List<String>> getAllLyrics(String seedLine, Objectify ofy, int stanzaCount) {
         String[] words = seedLine.split("\\s+");
         String lastWord = words[words.length - 1];
@@ -188,6 +206,15 @@ public class Lyrics {
 
     public static int IDEAL_LINE_LENGTH = 7;
     public static int SYLLABLE_DIFFERENCE_THRESHOLD = 2;
+    /**
+     * So we've got a lot of material from Twitter. Let's try to assemble it together into a song.
+     *
+     * @param seedLine
+     * @param fullLines The material from twitter
+     * @param rhymes
+     * @param lookForLeads Do we want to use leftover lines from this verse to seed other verses?
+     * @return
+     */
     public List<List<String>> assembleVerses(String seedLine, List<String> fullLines, List<String> rhymes, boolean lookForLeads) {
         List<List<String>> verses = getVersesFromLines(seedLine, TwitterUtil.chopLines(fullLines, null), rhymes, lookForLeads);
         if(verses.size() == 0) {
@@ -197,6 +224,15 @@ public class Lyrics {
         return verses;
     }
 
+    /**
+     * This is where all the work gets done for assembleVerses
+     *
+     * @param seedLine
+     * @param lines
+     * @param rhymes
+     * @param lookForLeads
+     * @return
+     */
     public List<List<String>> getVersesFromLines(String seedLine, List<String> lines, List<String> rhymes, boolean lookForLeads) {
         //Util.log("All lines:", lines);
         boolean seedLineIsDouble = false;
@@ -279,6 +315,12 @@ public class Lyrics {
                 syllableCount <= 2 * (targetLength + epsilon);
     }
 
+    /**
+     * Take one long line and split it up into two better-size lines
+     *
+     * @param line
+     * @return
+     */
     public static List<String> splitLine(String line) {
         int targetSize = SyllableUtil.getSyllableCountFromLine(line) / 2;
         String firstLine = "";
@@ -296,13 +338,27 @@ public class Lyrics {
         return Arrays.asList(new String[] {firstLine.trim(), secondLine.trim()});
     }
 
-
+    /**
+     * Does this line end in one of the known rhyming words?
+     *
+     * @param line
+     * @param rhymes
+     * @return
+     */
     public static boolean isRhymingLine(String line, List<String> rhymes) {
         String[] words = line.split("\\s+");
         String lastWord = words[words.length - 1].toLowerCase();
         return rhymes.indexOf(lastWord) >= 0;
     }
 
+    /**
+     * Takes a list of lines and groups them together by which rhyme they end with. The
+     * last group will have all the unrhymed lines.
+     *
+     * @param lines
+     * @param rhymes
+     * @return
+     */
     public static List<List<String>> groupLinesByRhyme(List<String> lines, List<String> rhymes) {
         List<List<String>> groupedLines = new ArrayList<List<String>>();
         int rhymeCount = rhymes.size();
