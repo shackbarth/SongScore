@@ -226,6 +226,4 @@ public class TwitterUtil {
                 || word.equalsIgnoreCase("lol");
 
     }
-
-
 }
