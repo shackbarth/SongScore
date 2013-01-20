@@ -11,7 +11,7 @@
 		  <div class='{res.css.container}'>
 	     	<div class='{res.css.border}'>
 	               <g:HTMLPanel ui:field="lyricsContainer">    
-	                   <g:TextBox ui:field="lyricsField" text="Type seed lyric here!" styleName="{res.css.lyricsField}"/>
+	                   <g:TextBox ui:field="lyricsField" styleName="{res.css.lyricsField}"/>
 	               </g:HTMLPanel>    
 	               <g:HTMLPanel ui:field="buttonContainer">
 	                   <g:Button ui:field="sendButton" styleName='{res.css.submitButton}'/>
