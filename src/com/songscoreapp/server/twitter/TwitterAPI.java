@@ -16,7 +16,7 @@ import com.google.gson.stream.MalformedJsonException;
 
 public class TwitterAPI {
 
-    public static int TWITTER_PAGE_COUNT = 2;
+    public static int TWITTER_PAGE_COUNT = 1;
 
     /**
      *
