@@ -65,6 +65,8 @@ public class LandingPage extends Composite{
         MyHandler handler = new MyHandler();
         sendButton.addClickHandler(handler);
         lyricsField.addKeyUpHandler(handler);
+        
+        lyricsField.getElement().setAttribute("placeholder", "Type seed lyric here");
 	}
 	
     // Create a handler for the sendButton and lyricsField
