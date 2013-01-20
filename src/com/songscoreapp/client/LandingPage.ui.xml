@@ -26,6 +26,6 @@
 	        </div><!--end border--> 
 	      </div><!--end container-->
     	</div><!--end wrapper-->
-    	<g:HTMLPanel ui:field="songOutputContainer"/>  
+    	<div class='{res.css.songSheet}' id="songOutputContainer"/>
 	</g:HTMLPanel>
 </ui:UiBinder> 

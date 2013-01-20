@@ -117,8 +117,6 @@ public class LandingPage extends Composite{
     
     native String renderAbcjs(String abcString) /*-{
     $wnd.renderAbc("songOutputContainer", abcString, null, null, {startingTune: 0});
-    // I'm about 100% sure that there's a more robust way to apply CSS dynamically.
-    $wnd.document.getElementById("songOutputContainer").className += "songSheet";
     $wnd.location.hash = "#songOutputContainer";
   }-*/;
 
