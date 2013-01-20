@@ -165,6 +165,7 @@ public class Lyrics {
             List<String> fragments = TwitterUtil.getTwitterLines(significantWord, rhyme, true);
             fullLines.addAll(fragments);
         }
+        fullLines.addAll(TwitterUtil.getTwitterLines(significantWord, "", true));
 
         List<List<String>> verses = assembleVerses(seedLine, fullLines, rhymes, true);
         if(verses.get(verses.size() - 1).get(0).equals("__Leads__")) {

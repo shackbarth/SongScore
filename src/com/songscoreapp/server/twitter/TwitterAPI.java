@@ -16,6 +16,8 @@ import com.google.gson.stream.MalformedJsonException;
 
 public class TwitterAPI {
 
+    public static int TWITTER_PAGE_COUNT = 2;
+
     /**
      *
      * @param query Something like "#Bieber rocks"
@@ -25,7 +27,7 @@ public class TwitterAPI {
      */
     public static List<String> getTweetsFromQuery(String query) throws IOException, MalformedJsonException {
         List<String> results = new ArrayList<String>();
-        for (int i = 1; i < 5; i++) {
+        for (int i = 1; i <= TWITTER_PAGE_COUNT; i++) {
             String url = getFormattedTwitterSearch(query, i);
             Util.log("twitter query url: "+ url);
             String json = queryTwitter(url);
