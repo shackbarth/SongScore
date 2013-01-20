@@ -13,7 +13,7 @@ body {
 	font-weight: 300;
 	}
 
-#wrapper {
+.wrapper {
 	width: 960px;
 	height: 100%;
 	margin: 0 auto;
@@ -22,7 +22,7 @@ body {
 	/*border:1px dotted blue;*/
 	}
 	
-#container {
+.container {
 	display: block;
 	width: 829px;
 	height: 726px;
@@ -31,7 +31,7 @@ body {
 	}
 	
 	
-#button {
+.button {
 	display: block;
 	width: 135px;
 	height: 160px;
@@ -40,8 +40,8 @@ body {
 	text-indent: -9999px;
 	}
 
-#button:hover { background-position: 0 -172px; }
-#button:active{ background-position: 0 -336px; }
+.button:hover { background-position: 0 -172px; }
+.button:active{ background-position: 0 -336px; }
 
 .submitButton {
 	display: block;
@@ -59,7 +59,7 @@ body {
 	border: 1px solid black;
 }
 
-#form {
+.form {
 	width: 630px;
 	height: 150px;
 	float: left;
@@ -79,7 +79,7 @@ body {
 	}
 	
 
-#lyrics { 
+.lyrics { 
 	display: block;
 	
 	padding-left: 15px;
@@ -99,7 +99,7 @@ body {
 
 /*ul {list-style-type: none;}*/
 
-#gender, #voice {
+.gender, .voice {
 	display: block;
 	margin-top:15px;
 	width: 285px;
@@ -108,18 +108,18 @@ body {
 	float:left;
 	}
 	
-#gender {
+.gender {
 	background: url(images/dropdown_gender.png) 0 0 no-repeat; 
 	
 	}
 	
-#voice {
+.voice {
 	background: url(images/dropdown_voice.png) 0 0 no-repeat; 
 	
 	}
 	
-#dropdown_stuff {float: left; }
-#reset{clear: both;}
+.dropdownStuff {float: left; }
+.reset{clear: both;}
 
 /*#gender li, #voice li{ background: #000;
 
