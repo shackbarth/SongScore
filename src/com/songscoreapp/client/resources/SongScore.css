@@ -148,3 +148,33 @@ a {color: #c05d1b; text-decoration:none;}
 a:hover {color:#de471e; text-decoration:underline;}
 a:active {color:#8c2c12; position: relative; top: 1px;}
 
+.loadingPopup {
+	position: relative;
+	margin: .5em auto;
+	padding: .5em;
+	background-color: #c8effe;
+	border: 3px solid #507786;
+	width: 8em;
+	height: 1.5em;
+	cursor: wait;
+	text-align: center;
+	
+	/* rounded corners/shadow for Firefox, Chrome, Safari */
+	border-radius: 5px 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	
+	/* dropshadow */
+	box-shadow: 5px 5px 5px dropShadow;
+	-webkit-box-shadow: 5px 5px dropShadow;
+	-moz-box-shadow: 5px 5px dropShadow;
+}
+
+.loadingPopup h2 {
+	text-align: center;
+	valign: middle;
+	font-size: 130%;
+	float: left;
+	color: #7f7f7f;
+}
+

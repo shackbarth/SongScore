@@ -28,6 +28,7 @@ public interface Resources extends ClientBundle {
 		String voice();
 		String dropdownStuff();
 		String reset();
+		String loadingPopup();
 	}
 
 }

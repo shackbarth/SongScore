@@ -11,10 +11,12 @@ import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.songscoreapp.client.resources.Resources;
@@ -50,6 +52,7 @@ public class LandingPage extends Composite{
 	TextBox lyricsField;
 	@UiField
 	Label errorLabel;
+	private PopupPanel loading = new PopupPanel();
 
 	/**
 
@@ -60,13 +63,17 @@ public class LandingPage extends Composite{
         // Focus the cursor on the lyrics field when the app loads
         lyricsField.setFocus(true);
         lyricsField.selectAll();
+        lyricsField.getElement().setAttribute("placeholder", "Type seed lyric here");
         
         // Add a handler to send the name to the server
         MyHandler handler = new MyHandler();
         sendButton.addClickHandler(handler);
         lyricsField.addKeyUpHandler(handler);
         
-        lyricsField.getElement().setAttribute("placeholder", "Type seed lyric here");
+        //loading.setStyle("loadingPopup")
+        loading.setWidget(new Label("Loading"));  
+        loading.setGlassEnabled(true);
+        loading.setModal(true);
 	}
 	
     // Create a handler for the sendButton and lyricsField
@@ -93,6 +100,11 @@ public class LandingPage extends Composite{
          * Send the line of lyrics to the server and wait for a response.
          */
         private void requestSong() {
+        	// show loading popup
+            loading.setPopupPosition(Window.getClientWidth() / 2 - 50,  
+                    Window.getClientHeight() / 2 - 45);  
+            loading.show(); 
+        	
             // First, we validate the input.
             errorLabel.setText("");
             String textToServer = lyricsField.getText();
@@ -112,12 +124,13 @@ public class LandingPage extends Composite{
                 @Override
                 public void onSuccess(String result) {
                     renderAbcjs(result);
+                    loading.setVisible(false);
                 }
             });
         }
     }
     
-    native String renderAbcjs(String abcString) /*-{
+  native String renderAbcjs(String abcString) /*-{
     $wnd.renderAbc("songOutputContainer", abcString, null, null, {startingTune: 0});
     $wnd.location.hash = "#songOutputContainer";
   }-*/;
