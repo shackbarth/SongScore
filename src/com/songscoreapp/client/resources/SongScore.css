@@ -9,7 +9,7 @@ body {
 	background: #a9cfd8 !important;
 	font-size: 16px;
 	color: #fff;
-    font-family: 'Merriweather', serif;
+    font-family: 'Roboto', sans-serif;
 	font-weight: 300;
 	}
 
@@ -154,8 +154,8 @@ a:active {color:#8c2c12; position: relative; top: 1px;}
 	padding: .5em;
 	background-color: #c8effe;
 	border: 3px solid #507786;
-	width: 8em;
-	height: 1.5em;
+	width: 12em;
+	height: 2.5em;
 	cursor: wait;
 	text-align: center;
 	
@@ -173,7 +173,7 @@ a:active {color:#8c2c12; position: relative; top: 1px;}
 .loadingPopup h2 {
 	text-align: center;
 	valign: middle;
-	font-size: 130%;
+	font-size: 150%;
 	float: left;
 	color: #7f7f7f;
 }
