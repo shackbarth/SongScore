@@ -16,6 +16,8 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.TextBox;
@@ -72,14 +74,14 @@ public class LandingPage extends Composite{
         lyricsField.addKeyUpHandler(handler);
         
         loading.setStylePrimaryName(Resources.INSTANCE.css().loadingPopup());
-        loading.setWidget(new HTML("<h2>Computing ...</h2>"));  
+        HorizontalPanel hp = new HorizontalPanel();
+        hp.setSpacing(5);
+        hp.add(new HTML("<h2>Computing ...</h2>"));
+        Image img = new Image(Resources.INSTANCE.loading());
+        hp.add(img);
+        loading.setWidget(hp); 
         loading.setGlassEnabled(true);
         loading.setModal(true);
-        
-        // TEST
-//        loading.setPopupPosition(Window.getClientWidth() / 2 - 50,  
-//                Window.getClientHeight() / 2 - 45);  
-//        loading.show(); 
 	}
 	
     // Create a handler for the sendButton and lyricsField

@@ -16,10 +16,10 @@
 	               <g:HTMLPanel ui:field="buttonContainer">
 	                   <g:Button ui:field="sendButton" styleName='{res.css.submitButton}'/>
 	               </g:HTMLPanel>             
-	               <div class='{res.css.dropdownStuff}'>
+	               <!-- <div class='{res.css.dropdownStuff}'>
 		                <div class='{res.css.gender}'></div>
 						<div class='{res.css.voice}'></div>
-		           </div>
+		           </div> -->
 	               <g:HTMLPanel ui:field="errorLabelContainer">
 	                   <g:Label ui:field="errorLabel"/>
 	               </g:HTMLPanel>    
