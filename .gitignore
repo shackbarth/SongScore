@@ -1,3 +1,4 @@
+.settings/
 .classpath
 log.txt*
 *.pem

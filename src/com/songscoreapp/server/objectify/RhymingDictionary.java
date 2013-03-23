@@ -1,5 +1,6 @@
 package com.songscoreapp.server.objectify;
 
+import com.songscoreapp.server.generator.Util;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -53,6 +54,7 @@ public class RhymingDictionary {
      * @return
      */
     public List<String> getTopLeads(List<String> leads, int limit) {
+        Util.log("getTopLeads input: "+ leads);
         // quality list is {leadIndex, quality}
         List<int[]> qualityList = new ArrayList<int[]>(leads.size());
         for(int i = 0; i < leads.size(); i++) {
@@ -70,7 +72,7 @@ public class RhymingDictionary {
             int leadIndex = qualityList.get(i)[0];
             int quality = qualityList.get(i)[1];
             if(quality > 0) {
-                //Util.log("Adding lead " + leads.get(leadIndex) + " of quality " + quality);
+                Util.log("Adding lead " + leads.get(leadIndex) + " of quality " + quality);
                 topLeads.add(leads.get(leadIndex));
             }
         }
