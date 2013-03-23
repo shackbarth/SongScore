@@ -34,7 +34,6 @@ public class TwitterUtil {
                     lyrics.add(strippedLine);
                 }
             }
-
         } catch (Exception e) {
             // oh well
             e.printStackTrace();
@@ -226,6 +225,4 @@ public class TwitterUtil {
                 || word.equalsIgnoreCase("lol");
 
     }
-
-
 }
