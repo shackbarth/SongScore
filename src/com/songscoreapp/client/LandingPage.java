@@ -66,7 +66,8 @@ public class LandingPage extends Composite{
         // Focus the cursor on the lyrics field when the app loads
         lyricsField.setFocus(true);
         lyricsField.selectAll();
-        lyricsField.getElement().setAttribute("placeholder", "Type seed lyric here");
+        lyricsField.getElement().setAttribute("placeholder", "Example: Here I go again on my own");
+        sendButton.setText("SUBMIT");
         
         // Add a handler to send the name to the server
         MyHandler handler = new MyHandler();
@@ -108,10 +109,6 @@ public class LandingPage extends Composite{
          * Send the line of lyrics to the server and wait for a response.
          */
         private void requestSong() {
-        	// show loading popup
-            loading.setPopupPosition(Window.getClientWidth() / 2 - 50,  
-                    Window.getClientHeight() / 2 - 45);  
-            loading.show(); 
         	
             // First, we validate the input.
             errorLabel.setText("");
@@ -120,6 +117,11 @@ public class LandingPage extends Composite{
                 errorLabel.setText("Please enter at least four characters");
                 return;
             }
+            
+        	// show loading popup
+            loading.setPopupPosition(Window.getClientWidth() / 2 - 50,  
+                    Window.getClientHeight() / 2 - 45);  
+            loading.show();
 
             // Then, we send the input to the server.
             songService.songServer(textToServer, new AsyncCallback<String>() {

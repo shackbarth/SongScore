@@ -15,24 +15,26 @@ public interface Resources extends ClientBundle {
     @Source("loading.gif")
     ImageResource loading();
     
+    @Source("robot.png")
+    ImageResource robot();
+    
+    @Source("b.png")
+    ImageResource spacer();
+    
     @Source("SongScore.css")
     Style css();
 
 	public interface Style extends CssResource {
 		String wrapper();
-		String container();
-		String button();
+		String gridWrapper();
+		String contentWrapper();
+		String lyricsTextBox();
+		String lyricsLabel();
 		String submitButton();
 		String songSheet();
-		String form();
-		String lyricsField();
-		String lyrics();
-		String border();
-		String gender();
-		String voice();
-		String dropdownStuff();
-		String reset();
 		String loadingPopup();
+		String grid();
+		String form();
 	}
 
 }
