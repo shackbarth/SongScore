@@ -1,0 +1,31 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	<ui:style>
+	</ui:style>
+	
+	<ui:with field='res' type='com.songscoreapp.client.resources.Resources'/>
+	
+	<g:HTMLPanel>
+	  <div class='{res.css.wrapper}'>
+		  <div class='{res.css.container}'>
+	     	<div class='{res.css.border}'>
+	               <g:HTMLPanel ui:field="lyricsContainer">    
+	                   <g:TextBox ui:field="lyricsField" styleName="{res.css.lyricsField}"/>
+	               </g:HTMLPanel>    
+	               <g:HTMLPanel ui:field="buttonContainer">
+	                   <g:Button ui:field="sendButton" styleName='{res.css.submitButton}'/>
+	               </g:HTMLPanel>             
+	               <!-- <div class='{res.css.dropdownStuff}'>
+		                <div class='{res.css.gender}'></div>
+						<div class='{res.css.voice}'></div>
+		           </div> -->
+	               <g:HTMLPanel ui:field="errorLabelContainer">
+	                   <g:Label ui:field="errorLabel"/>
+	               </g:HTMLPanel>    
+	        </div><!--end border--> 
+	      </div><!--end container-->
+    	</div><!--end wrapper-->
+    	<div class='{res.css.songSheet}' id="songOutputContainer"/>
+	</g:HTMLPanel>
+</ui:UiBinder> 

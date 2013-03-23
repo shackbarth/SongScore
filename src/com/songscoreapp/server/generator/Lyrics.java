@@ -15,7 +15,6 @@ public class Lyrics {
         this.dictionary = dictionary;
     }
 
-
     static private int LAST_NAME = 2000;
     static private int CAPITALIZED = 1000;
     /**
@@ -155,6 +154,7 @@ public class Lyrics {
         Util.log(rhymes != null ? rhymes.toString() : "Um, I need to look this word up.");
 
         if(rhymes == null) {
+            Util.log("rhymes == null !!!");
             return getLastResortLyrics(seedLine, stanzaCount);
         }
         String significantWord = getSignificantWord(seedLine);
@@ -165,6 +165,7 @@ public class Lyrics {
             List<String> fragments = TwitterUtil.getTwitterLines(significantWord, rhyme, true);
             fullLines.addAll(fragments);
         }
+        fullLines.addAll(TwitterUtil.getTwitterLines(significantWord, "", true));
 
         List<List<String>> verses = assembleVerses(seedLine, fullLines, rhymes, true);
         if(verses.get(verses.size() - 1).get(0).equals("__Leads__")) {
