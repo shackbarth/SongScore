@@ -1403,5 +1403,6 @@ public class Rhymes {
             "YOU",
             "YOUNG",
             "YOUR",
-            "YOURE"};
+            "YOURE"
+    };
 }

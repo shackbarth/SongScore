@@ -1,9 +1,22 @@
 package com.songscoreapp.server.generator;
 
 import java.util.List;
+import java.util.ArrayList;
 
 
 public class Util {
+
+    public static <T> List<T> intersection(List<T> list1, List<T> list2) {
+        List<T> list = new ArrayList<T>();
+
+        for (T t : list1) {
+            if(list2.contains(t)) {
+                list.add(t);
+            }
+        }
+
+        return list;
+    }
 
     public static String chordToLetter(Integer chord) {
         switch (chord) {
