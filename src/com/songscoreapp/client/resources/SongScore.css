@@ -5,9 +5,12 @@
 @def darkPink #4b082e;
 @def pink #ae2175;
 
-html, body {
-	height:100%;
-	width:100%;
+html {
+	height: 100%;
+	width: 100%;
+}
+
+body {
 	background: background;
 	font-size: 100%;
 	color: #fff;
@@ -146,6 +149,7 @@ html, body {
 	margin: 1em auto;
 	background-color: white;
 	border: 1px solid black;
+	overflow: auto;
 }
 
 .loadingPopup {
@@ -171,4 +175,16 @@ html, body {
 .loadingPopup h2 {
 	font-size: 130%;
 	color: #fff;
+}
+
+.error {
+	margin: 0 auto;
+	padding: 5px;
+	border: 2px solid magenta;
+	font-size: 120%;
+	width: 50%;
+	
+	border-radius: 5px 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
 }

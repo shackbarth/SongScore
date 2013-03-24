@@ -22,7 +22,7 @@
 	          </fieldset>
           </div>
           <g:HTMLPanel ui:field="errorLabelContainer">
-             	<g:Label ui:field="errorLabel"/>
+             	<g:Label ui:field="errorLabel" styleName="{res.css.error}" visible="false"/>
           </g:HTMLPanel>
         </div>
 

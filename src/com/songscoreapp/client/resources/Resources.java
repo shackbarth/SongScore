@@ -35,6 +35,7 @@ public interface Resources extends ClientBundle {
 		String loadingPopup();
 		String grid();
 		String form();
+		String error();
 	}
 
 }
