@@ -1,7 +1,9 @@
 @def background #1f0f34;
 @def dropShadow #4d4d4d;
 @def loadingBackground #c8effe;
-@def loadingBorder #92105b;
+@def magenta #92105b;
+@def darkPink #4b082e;
+@def pink #ae2175;
 
 html, body {
 	height:100%;
@@ -99,12 +101,12 @@ html, body {
   -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5) inset, 0 1px 1px #000000;
   border: 1px solid #4b082e;
-  background: #92105b;
-  background-image: -moz-linear-gradient(#92105b, #4b082e);
-  background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #4b082e), color-stop(1, #92105b));
-  -moz-box-shadow: 0 0 1px #ae2175 inset;
-  -webkit-box-shadow: 0 0 1px #ae2175 inset;
-  box-shadow: 0 0 1px #ae2175 inset;
+  background: magenta;
+  background-image: -moz-linear-gradient(magenta, darkPink);
+  background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, darkPink), color-stop(1, #92105b));
+  -moz-box-shadow: 0 0 1px pink inset;
+  -webkit-box-shadow: 0 0 1px pink inset;
+  box-shadow: 0 0 1px pink inset;
   color: #fff;
   font-size: 1em;
   font-weight: 400;
@@ -120,17 +122,17 @@ html, body {
 
 .submitButton:hover {
   background: #c4177b;
-  background-image: -moz-linear-gradient(#c4177b, #4b082e);
-  background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #4b082e), color-stop(1, #c4177b));
-  -moz-box-shadow: 0 0 1px #ae2175 inset;
-  -webkit-box-shadow: 0 0 1px #ae2175 inset;
-  box-shadow: 0 0 1px #ae2175 inset;
+  background-image: -moz-linear-gradient(#c4177b, darkPink);
+  background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, darkPink), color-stop(1, #c4177b));
+  -moz-box-shadow: 0 0 1px pink inset;
+  -webkit-box-shadow: 0 0 1px pink inset;
+  box-shadow: 0 0 1px pink inset;
 }
 
 .submitButton:active {
   border: 0;
   background: #92105b;
-  background-image: -moz-linear-gradient(#92105b, #4b082e);
+  background-image: -moz-linear-gradient(magenta, #4b082e);
   background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #4b082e), color-stop(1, #92105b));
   -moz-box-shadow: 0 1px 5px #000000 inset;
   -webkit-box-shadow: 0 1px 5px #000000 inset;
@@ -150,9 +152,9 @@ html, body {
 	margin: 0 auto;
 	padding: 0;
 	background-color: background;
-	border: 5px solid loadingBorder;
-	width: 12em;
-	height: 2.5em;
+	border: 5px solid magenta;
+	width: 23em;
+	height: 7em;
 	cursor: wait;
 	text-align: center;
 	
@@ -160,15 +162,12 @@ html, body {
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;
 	
-	-moz-box-shadow: 0 1px 5px #000000 inset;
-  	-webkit-box-shadow: 0 1px 5px #000000 inset;
-  	box-shadow: 0 1px 5px #000000 inset;
+	-moz-box-shadow: 0 1px 10px magenta;
+  	-webkit-box-shadow: 0 1px 10px magenta;
+  	box-shadow: 0 1px 10px magenta;
 }
 
 .loadingPopup h2 {
-	/* text-align: center; */
-	/* valign: top; */
-	font-size: 100%;
-	/* float: left; */
+	font-size: 130%;
 	color: #fff;
 }
