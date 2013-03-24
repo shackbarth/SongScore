@@ -23,13 +23,12 @@ python_preamble:
 - import: google.appengine.ext.db
 - import: google.appengine.api.datastore
 - import: google.appengine.api.users
-
+ 
 transformers:
-
+ 
 - kind: Word
   connector: csv
  
-  connector_options:
   property_map:
  
     - property: word
