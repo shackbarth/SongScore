@@ -1,7 +1,7 @@
 @def background #1f0f34;
 @def dropShadow #4d4d4d;
-@def loadingText #7f7f7f;
 @def loadingBackground #c8effe;
+@def loadingBorder #92105b;
 
 html, body {
 	height:100%;
@@ -147,10 +147,10 @@ html, body {
 
 .loadingPopup {
 	position: relative;
-	margin: .5em auto;
-	padding: .5em;
+	margin: 0 auto;
+	padding: 0;
 	background-color: background;
-	border: 3px solid #507786;
+	border: 5px solid loadingBorder;
 	width: 12em;
 	height: 2.5em;
 	cursor: wait;
@@ -159,12 +159,16 @@ html, body {
 	border-radius: 5px 5px;
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;
+	
+	-moz-box-shadow: 0 1px 5px #000000 inset;
+  	-webkit-box-shadow: 0 1px 5px #000000 inset;
+  	box-shadow: 0 1px 5px #000000 inset;
 }
 
 .loadingPopup h2 {
-	text-align: center;
-	valign: top;
-	font-size: 150%;
-	float: left;
-	color: loadingText;
+	/* text-align: center; */
+	/* valign: top; */
+	font-size: 100%;
+	/* float: left; */
+	color: #fff;
 }
