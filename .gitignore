@@ -6,6 +6,7 @@ log.txt*
 *.swp
 *.swo
 *.class
+*.DS_Store
 .gwt
 gwt-unitCache/
 www-test/
