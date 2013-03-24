@@ -3,8 +3,7 @@ package com.songscoreapp.server.twitter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import com.songscoreapp.server.generator.Lyrics;
-import com.songscoreapp.server.generator.SyllableUtil;
+import com.songscoreapp.server.generator.*;
 
 public class TwitterUtil {
 
@@ -18,7 +17,8 @@ public class TwitterUtil {
      *  need to relax the search.
      * @return A usable list of lines of lyrics
      */
-    public static List<String> getTwitterLines(String contextWord, String rhymeWord, boolean hashtagContext) {
+    public static List<String> getTwitterLines(String contextWord, String rhymeWord,
+        boolean hashtagContext, boolean isDirtyAcceptable) {
         List<String> lyrics = new ArrayList<String>();
         String query = (hashtagContext ? "#" : "")
                 + contextWord + " " + rhymeWord;
@@ -27,9 +27,9 @@ public class TwitterUtil {
             List<String> lines = TwitterAPI.getTweetsFromQuery(query);
             for(String line : lines) {
                 String strippedLine = stripJunk(line);
-                //String fragment = getFragment(strippedLine, rhymeWord);
+
                 if(strippedLine != null
-                        && isUsableLine(strippedLine)
+                        && isUsableLine(strippedLine, isDirtyAcceptable)
                         && lyrics.indexOf(strippedLine) < 0) {
                     lyrics.add(strippedLine);
                 }
@@ -47,7 +47,7 @@ public class TwitterUtil {
      * @param line
      * @return
      */
-    public static boolean isUsableLine(String line) {
+    public static boolean isUsableLine(String line, boolean isDirtyAcceptable) {
         //System.out.println("Is usable? " + line);
         if(line == null || line.length() == 0) {
             return false;
@@ -70,8 +70,9 @@ public class TwitterUtil {
                 return false;
             }
         }
-
-        return true;
+        // disallow bad words unless the user has set precedent which involves
+        // dirty words in the seed line
+        return isDirtyAcceptable || !Lyrics.containsBadWord(line);
     }
 
     /**

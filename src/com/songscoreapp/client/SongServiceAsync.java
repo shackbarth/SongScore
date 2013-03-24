@@ -8,4 +8,5 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 public interface SongServiceAsync {
     void songServer(String input, AsyncCallback<String> callback)
             throws IllegalArgumentException;
+    void containsBadWord(String line, AsyncCallback<Boolean> callback) throws IllegalArgumentException;
 }
