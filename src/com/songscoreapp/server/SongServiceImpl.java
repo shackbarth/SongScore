@@ -1,11 +1,14 @@
 package com.songscoreapp.server;
 
+import java.util.Arrays;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.googlecode.objectify.Objectify;
 import com.googlecode.objectify.ObjectifyService;
 import com.songscoreapp.client.SongService;
 import com.songscoreapp.server.generator.MusicGenerator;
 import com.songscoreapp.server.objectify.DbLoader;
+import com.songscoreapp.server.generator.*;
+
 
 /**
  * The server side implementation of the RPC service.
@@ -39,6 +42,11 @@ public class SongServiceImpl extends RemoteServiceServlet implements
         String htmlString = gen.getSheetMusicFromInput(input, 'B');
 
         return htmlString;
+    }
+
+    @Override
+    public boolean containsBadWord(String seedLine) {
+        return Lyrics.containsBadWord(seedLine);
     }
 
     /**
