@@ -15,8 +15,8 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
-import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
@@ -66,7 +66,8 @@ public class LandingPage extends Composite{
         // Focus the cursor on the lyrics field when the app loads
         lyricsField.setFocus(true);
         lyricsField.selectAll();
-        lyricsField.getElement().setAttribute("placeholder", "Type seed lyric here");
+        lyricsField.getElement().setAttribute("placeholder", "Example: Here I go again on my own");
+        sendButton.setText("SUBMIT");
         
         // Add a handler to send the name to the server
         MyHandler handler = new MyHandler();
@@ -74,14 +75,15 @@ public class LandingPage extends Composite{
         lyricsField.addKeyUpHandler(handler);
         
         loading.setStylePrimaryName(Resources.INSTANCE.css().loadingPopup());
-        HorizontalPanel hp = new HorizontalPanel();
-        hp.setSpacing(5);
-        hp.add(new HTML("<h2>Computing ...</h2>"));
+        FlowPanel fp = new FlowPanel();
+        fp.add(new HTML("<h2>I'm writing your hit song ...</h2>"));
         Image img = new Image(Resources.INSTANCE.loading());
-        hp.add(img);
-        loading.setWidget(hp); 
+        fp.add(img);
+        loading.setWidget(fp); 
         loading.setGlassEnabled(true);
         loading.setModal(true);
+        loading.setPopupPosition(Window.getClientWidth() / 2 - 50,  
+                Window.getClientHeight() / 2 - 45); 
 	}
 	
     // Create a handler for the sendButton and lyricsField
@@ -108,10 +110,6 @@ public class LandingPage extends Composite{
          * Send the line of lyrics to the server and wait for a response.
          */
         private void requestSong() {
-        	// show loading popup
-            loading.setPopupPosition(Window.getClientWidth() / 2 - 50,  
-                    Window.getClientHeight() / 2 - 45);  
-            loading.show(); 
         	
             // First, we validate the input.
             errorLabel.setText("");
@@ -120,6 +118,9 @@ public class LandingPage extends Composite{
                 errorLabel.setText("Please enter at least four characters");
                 return;
             }
+            
+        	// show loading popup 
+            loading.show();
 
             // Then, we send the input to the server.
             songService.songServer(textToServer, new AsyncCallback<String>() {
