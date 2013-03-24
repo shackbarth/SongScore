@@ -115,7 +115,7 @@ public class LandingPage extends Composite{
             errorLabel.setText("");
             String textToServer = lyricsField.getText();
             if (textToServer == null || textToServer.length() < 4) {
-                errorLabel.setText("Please enter at least four characters");
+                errorLabel.setText("Oops! Please enter at least four characters");
                 return;
             }
             
@@ -127,7 +127,7 @@ public class LandingPage extends Composite{
                 @Override
                 public void onFailure(Throwable caught) {
                     // Show the RPC error message to the user
-                    errorLabel.setText(SERVER_ERROR);
+                    errorLabel.setText("Oops!" + SERVER_ERROR);
                 }
 
                 @Override
