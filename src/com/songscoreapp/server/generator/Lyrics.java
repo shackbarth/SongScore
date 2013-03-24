@@ -149,28 +149,28 @@ public class Lyrics {
         String[] words = seedLine.split("\\s+");
         String lastWord = words[words.length - 1];
 
+        boolean isDirtyAcceptable = containsBadWord(seedLine);
+
+        System.out.println("dirty is "+ (isDirtyAcceptable ? "" : "not ") + "acceptable");
+
         Util.log("Let's see what rhymes with " + lastWord);
         List<String> rhymes = dictionary.getRhymes(lastWord, 10);
         Util.log(rhymes != null ? rhymes.toString() : "Um, I need to look this word up.");
 
-        // intersection will be non-zero if this line contains bad words
-        if(rhymes == null || Util.intersection(Arrays.asList(words), Arrays.asList(badWords)).size() > 0) {
-            if (rhymes == null) {
-                Util.log("rhymes == null !!!");
-            } else {
-                Util.log("contains bad word");
-            }
+        if (rhymes == null) {
+            Util.log("rhymes == null !!!");
             return getLastResortLyrics(seedLine, stanzaCount);
         }
+
         String significantWord = getSignificantWord(seedLine);
         Util.log("Let's write a song on the theme of " + significantWord);
 
         List<String> fullLines = new ArrayList<String>();
         for(String rhyme: rhymes) {
-            List<String> fragments = TwitterUtil.getTwitterLines(significantWord, rhyme, true);
+            List<String> fragments = TwitterUtil.getTwitterLines(significantWord, rhyme, true, isDirtyAcceptable);
             fullLines.addAll(fragments);
         }
-        fullLines.addAll(TwitterUtil.getTwitterLines(significantWord, "", true));
+        fullLines.addAll(TwitterUtil.getTwitterLines(significantWord, "", true, isDirtyAcceptable));
 
         List<List<String>> verses = assembleVerses(seedLine, fullLines, rhymes, true);
         if(verses.get(verses.size() - 1).get(0).equals("__Leads__")) {
@@ -191,7 +191,7 @@ public class Lyrics {
 
                 List<String> secondaryFullLines = new ArrayList<String>();
                 for(String rhyme: secondaryRhymes) {
-                    List<String> fragments = TwitterUtil.getTwitterLines(significantWord, rhyme, true);
+                    List<String> fragments = TwitterUtil.getTwitterLines(significantWord, rhyme, true, isDirtyAcceptable);
                     secondaryFullLines.addAll(fragments);
                 }
 
@@ -391,6 +391,11 @@ public class Lyrics {
             }
         }
         return groupedLines;
+    }
+    public static boolean containsBadWord(String line) {
+        boolean bad = Util.intersection(Arrays.asList(line.split("\\s+")), Arrays.asList(Lyrics.badWords)).size() > 0;
+        System.out.println((bad ? "bad" : "good") + " -- " + line);
+        return bad;
     }
     private static final String[] badWords = {
         "4r5e",

@@ -9,4 +9,5 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 @RemoteServiceRelativePath("song")
 public interface SongService extends RemoteService {
     String songServer(String name) throws IllegalArgumentException;
+    boolean containsBadWord(String seedLine);
 }

@@ -81,7 +81,6 @@ public class LandingPage extends Composite{
         fp.add(img);
         loading.setWidget(fp); 
         loading.setGlassEnabled(true);
-        loading.setModal(true);
         loading.setPopupPosition(Window.getClientWidth() / 2 - 50,  
                 Window.getClientHeight() / 2 - 45); 
 	}
@@ -113,9 +112,12 @@ public class LandingPage extends Composite{
         	
             // First, we validate the input.
             errorLabel.setText("");
+            errorLabel.setVisible(false);
+            
             String textToServer = lyricsField.getText();
             if (textToServer == null || textToServer.length() < 4) {
-                errorLabel.setText("Please enter at least four characters");
+                errorLabel.setText("Oops! Please enter at least four characters.");
+                errorLabel.setVisible(true);
                 return;
             }
             
@@ -127,7 +129,8 @@ public class LandingPage extends Composite{
                 @Override
                 public void onFailure(Throwable caught) {
                     // Show the RPC error message to the user
-                    errorLabel.setText(SERVER_ERROR);
+                    errorLabel.setText("Oops!" + SERVER_ERROR);
+                    errorLabel.setVisible(true);
                 }
 
                 @Override
@@ -141,7 +144,7 @@ public class LandingPage extends Composite{
     
   native String renderAbcjs(String abcString) /*-{
     $wnd.renderAbc("songOutputContainer", abcString, null, null, {startingTune: 0});
-    $wnd.location.hash = "#songOutputContainer";
+    $doc.getElementById("songOutputContainer").scrollIntoView(true);
   }-*/;
 
 }
