@@ -2,9 +2,17 @@ package com.songscoreapp.server.generator;
 
 import static org.junit.Assert.assertEquals;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import org.junit.Test;
 
 public class SyllableUtilTest {
+
+    @Test
+    public void testWordSyllables() {
+        List<Integer> expectedResult = Arrays.asList(new Integer[] {2, 3, 3});
+        assertEquals(expectedResult, SyllableUtil.getWordSyllablesFromLine("Item imitate potato"));
+    }
 
     @Test
     public void testIsMultisyllableVowelCluster() {
