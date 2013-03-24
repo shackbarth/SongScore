@@ -141,7 +141,7 @@ public class LandingPage extends Composite{
     
   native String renderAbcjs(String abcString) /*-{
     $wnd.renderAbc("songOutputContainer", abcString, null, null, {startingTune: 0});
-    $wnd.location.hash = "#songOutputContainer";
+    $doc.getElementById("songOutputContainer").scrollIntoView(true);
   }-*/;
 
 }
