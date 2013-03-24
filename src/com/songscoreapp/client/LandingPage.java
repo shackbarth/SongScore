@@ -81,7 +81,6 @@ public class LandingPage extends Composite{
         fp.add(img);
         loading.setWidget(fp); 
         loading.setGlassEnabled(true);
-        loading.setModal(true);
         loading.setPopupPosition(Window.getClientWidth() / 2 - 50,  
                 Window.getClientHeight() / 2 - 45); 
 	}

@@ -16,7 +16,7 @@
         <div class="{res.css.contentWrapper}">
           <div class="{res.css.form}">  
 	          <fieldset>
-	              <g:Label ui:field="lyrics" text="Type some lyrics" styleName="{res.css.lyricsLabel}"/>
+	              <g:Label ui:field="lyrics" text="Type some lyrics:" styleName="{res.css.lyricsLabel}"/>
 	              <g:TextBox ui:field="lyricsField" styleName="{res.css.lyricsTextBox}"/>
 	              <g:Button ui:field="sendButton" styleName="{res.css.submitButton}"/>
 	          </fieldset>
@@ -26,8 +26,7 @@
           </g:HTMLPanel>
         </div>
 
-
     </div><!--end wrapper-->
-     <div class="{res.css.songSheet}" id="songOutputContainer"/>
+    <div class="{res.css.songSheet}" id="songOutputContainer"/>
   </g:HTMLPanel>
 </ui:UiBinder>
