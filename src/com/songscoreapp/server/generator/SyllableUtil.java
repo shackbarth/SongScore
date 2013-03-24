@@ -5,7 +5,26 @@ import java.util.List;
 
 public class SyllableUtil {
 
+    public static ArrayList<Integer> getWordSyllablesFromLine(String line) {
+        ArrayList<Integer> wordSyllables = new ArrayList<Integer>();
+        Integer totalSyllables = 0;
+        if(line == null || line.length() == 0) {
+            return wordSyllables;
+        }
+        String[] words = line.split(" ");
 
+        for(String word : words) {
+            wordSyllables.add(getSyllableCountFromWord(word));
+        }
+        return wordSyllables;
+    }
+
+    /**
+     *
+     *
+     * @param line List of words
+     * @return
+     */
     public static Integer getSyllableCountFromLine(List<String> line) {
         Integer totalSyllables = 0;
         for(String word : line) {
