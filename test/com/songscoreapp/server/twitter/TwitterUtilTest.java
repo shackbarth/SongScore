@@ -21,11 +21,11 @@ public class TwitterUtilTest {
 
     @Test
     public void testIsUsableLine() {
-        assertEquals(true, TwitterUtil.isUsableLine("A good line as far as I can tell"));
-        assertEquals(false, TwitterUtil.isUsableLine("I want!! #venus #flytrap #carnivore #plants #botany #traps #cool #crazy #uws #manhattan @ Academy Floral Co"));
-        assertEquals(false, TwitterUtil.isUsableLine("Too short"));
-        assertEquals(false, TwitterUtil.isUsableLine(""));
-        assertEquals(false, TwitterUtil.isUsableLine("A bad line has https://bit.ly/24gj4"));
+        assertEquals(true, TwitterUtil.isUsableLine("A good line as far as I can tell", true));
+        assertEquals(false, TwitterUtil.isUsableLine("I want!! #venus #flytrap #carnivore #plants #botany #traps #cool #crazy #uws #manhattan @ Academy Floral Co", true));
+        assertEquals(false, TwitterUtil.isUsableLine("Too short", true));
+        assertEquals(false, TwitterUtil.isUsableLine("", true));
+        assertEquals(false, TwitterUtil.isUsableLine("A bad line has https://bit.ly/24gj4", true));
     }
 
     @Test
